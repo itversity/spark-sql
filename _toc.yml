@@ -1,0 +1,84 @@
+- file: spark-sql.ipynb
+  numbered: true
+
+- file: 01_getting_started/01_getting_started.ipynb
+  sections:
+  - file: 01_getting_started/02_overview_of_spark_documentation.ipynb
+  - file: 01_getting_started/03_overview_of_spark_sql_cli.ipynb
+  - file: 01_getting_started/04_overview_of_spark_sql_properties.ipynb
+  - file: 01_getting_started/05_running_os_commands.ipynb
+  - file: 01_getting_started/06_understanding_warehouse_directory.ipynb
+  - file: 01_getting_started/07_managing_spark_metastore_databases.ipynb
+  - file: 01_getting_started/08_managing_spark_metastore_tables.ipynb
+  - file: 01_getting_started/09_retrieve_metadata_of_tables.ipynb
+  - file: 01_getting_started/10_role_of_spark_or_hive_metastore.ipynb
+  - file: 01_getting_started/11_exercise_getting_started.ipynb
+
+- file: 02_basic_transformations/01_basic_transformations.ipynb
+  sections:
+  - file: 02_basic_transformations/02_spark_sql_overview.ipynb
+  - file: 02_basic_transformations/03_define_problem_statement.ipynb
+  - file: 02_basic_transformations/04_preparing_tables.ipynb
+  - file: 02_basic_transformations/05_projecting_data.ipynb
+  - file: 02_basic_transformations/06_filtering_data.ipynb
+  - file: 02_basic_transformations/07_joining_tables_inner.ipynb
+  - file: 02_basic_transformations/08_joining_tables_outer.ipynb
+  - file: 02_basic_transformations/09_aggregating_data.ipynb
+  - file: 02_basic_transformations/10_sorting_data.ipynb
+  - file: 02_basic_transformations/11_conclusion_final_solution.ipynb
+  - file: 02_basic_transformations/12_exercises_basic_sql_queries.ipynb
+
+- file: 03_basic_ddl_and_dml/01_basic_ddl_and_dml.ipynb
+  sections:
+  - file: 03_basic_ddl_and_dml/02_create_spark_metastore_tables.ipynb
+  - file: 03_basic_ddl_and_dml/03_overview_of_data_types.ipynb
+  - file: 03_basic_ddl_and_dml/04_adding_comments.ipynb
+  - file: 03_basic_ddl_and_dml/05_loading_data_into_tables_local.ipynb
+  - file: 03_basic_ddl_and_dml/06_loading_data_into_tables_hdfs.ipynb
+  - file: 03_basic_ddl_and_dml/07_loading_data_append_and_overwrite.ipynb
+  - file: 03_basic_ddl_and_dml/08_creating_external_tables.ipynb
+  - file: 03_basic_ddl_and_dml/09_managed_vs_external_tables.ipynb
+  - file: 03_basic_ddl_and_dml/10_overview_of_file_formats.ipynb
+  - file: 03_basic_ddl_and_dml/11_dropping_tables_and_databases.ipynb
+  - file: 03_basic_ddl_and_dml/12_truncating_tables.ipynb
+  - file: 03_basic_ddl_and_dml/13_exercises_managing_tables.ipynb
+
+- file: 04_dml_and_partitioning/01_dml_and_partitioning.ipynb
+  sections:
+  - file: 04_dml_and_partitioning/02_introduction_to_partitioning.ipynb
+  - file: 04_dml_and_partitioning/03_creating_tables_using_parquet.ipynb
+  - file: 04_dml_and_partitioning/04_load_vs_insert.ipynb
+  - file: 04_dml_and_partitioning/05_inserting_data_using_stage_table.ipynb
+  - file: 04_dml_and_partitioning/06_creating_partitioned_tables.ipynb
+  - file: 04_dml_and_partitioning/07_adding_partitions_to_tables.ipynb
+  - file: 04_dml_and_partitioning/08_loading_data_into_partitions.ipynb
+  - file: 04_dml_and_partitioning/09_inserting_data_into_partitions.ipynb
+  - file: 04_dml_and_partitioning/10_using_dynamic_partition_mode.ipynb
+  - file: 04_dml_and_partitioning/11_exercises_partitioned_tables.ipynb
+
+- file: 05_predefined_functions/01_predefined_functions.ipynb
+  sections:
+  - file: 05_predefined_functions/02_overview_of_functions.ipynb
+  - file: 05_predefined_functions/03_validating_functions.ipynb
+  - file: 05_predefined_functions/04_string_manipulation_functions.ipynb
+  - file: 05_predefined_functions/05_date_manipulation_functions.ipynb
+  - file: 05_predefined_functions/06_overview_of_numeric_functions.ipynb
+  - file: 05_predefined_functions/07_data_type_conversion.ipynb
+  - file: 05_predefined_functions/08_handling_null_values.ipynb
+  - file: 05_predefined_functions/09_using_case_and_when.ipynb
+  - file: 05_predefined_functions/10_query_example_word_count.ipynb
+  - file: 05_predefined_functions/11_exercises_pre_defined_functions.ipynb
+
+- file: 06_windowing_functions/01_windowing_functions.ipynb
+  sections:
+  - file: 06_windowing_functions/02_prepare_database.ipynb
+  - file: 06_windowing_functions/03_overview_of_windowing_functions.ipynb
+  - file: 06_windowing_functions/04_aggregations_using_windowing_functions.ipynb
+  - file: 06_windowing_functions/05_cumulative_or_moving_aggregations.ipynb
+  - file: 06_windowing_functions/06_using_lead_or_lag.ipynb
+  - file: 06_windowing_functions/07_getting_first_and_last_values.ipynb
+  - file: 06_windowing_functions/08_ranking_using_windowing_functions.ipynb
+  - file: 06_windowing_functions/09_order_of_execution_of_sql.ipynb
+  - file: 06_windowing_functions/10_overview_of_sub_queries.ipynb
+  - file: 06_windowing_functions/11_filtering_window_function_results.ipynb
+  - file: 06_windowing_functions/12_exercises_windowing_functions.ipynb
