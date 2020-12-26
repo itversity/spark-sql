@@ -56,7 +56,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="5.2. Validating Functions" href="03_validating_functions.html" />
-    <link rel="prev" title="5. Pre-defined Functions" href="01_predefined_functions.html" />
+    <link rel="prev" title="5. Predefined Functions" href="01_predefined_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -117,7 +117,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="reference internal" href="01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
   <ul class="current">
    <li class="toctree-l2 current active">
@@ -291,6 +291,53 @@
 <p>Let us get overview of pre-defined functions in Spark SQL.</p>
 <div class="cell tag_remove-input docutils container">
 </div>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+
+val username = System.getProperty(&quot;user.name&quot;)
+val spark = SparkSession.
+    builder.
+    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
+    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
+    enableHiveSupport.
+    appName(s&quot;${username} | Spark SQL - Predefined Functions&quot;).
+    master(&quot;yarn&quot;).
+    getOrCreate
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>We can get list of functions by running <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">functions</span></code></p></li>
 <li><p>We can use DESCRIBE command to get the syntax and symantecs of a function - <code class="docutils literal notranslate"><span class="pre">DESCRIBE</span> <span class="pre">FUNCTION</span> <span class="pre">substr</span></code></p></li>
@@ -374,7 +421,7 @@ DESCRIBE FUNCTION substr
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="01_predefined_functions.html" title="previous page"><span class="section-number">5. </span>Pre-defined Functions</a>
+    <a class='left-prev' id="prev-link" href="01_predefined_functions.html" title="previous page"><span class="section-number">5. </span>Predefined Functions</a>
     <a class='right-next' id="next-link" href="03_validating_functions.html" title="next page"><span class="section-number">5.2. </span>Validating Functions</a>
 
     </div>

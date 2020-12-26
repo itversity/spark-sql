@@ -169,7 +169,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -305,8 +305,7 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/vnNhIcvjQqs?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
-<p><strong>Unlike Hive, Spark SQL does not support Bucketing which is similar to Hash Partitioning. However, Delta Lake does. Delta Lake is 3rd party library which facilitate us additional capabilities such as ACID transactions on top of Spark Metastore tables</strong></p>
-<p>Let us make sure that we have orders table with data as we will be using it to populate partitioned tables very soon.</p>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
@@ -331,6 +330,30 @@
 </div>
 </div>
 </div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Unlike Hive, Spark SQL does not support Bucketing which is similar to Hash Partitioning. However, Delta Lake does. Delta Lake is 3rd party library which facilitate us additional capabilities such as ACID transactions on top of Spark Metastore tables</strong></p>
+<p>Let us make sure that we have orders table with data as we will be using it to populate partitioned tables very soon.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>

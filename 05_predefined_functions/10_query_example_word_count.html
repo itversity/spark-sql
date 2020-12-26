@@ -117,7 +117,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="reference internal" href="01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
   <ul class="current">
    <li class="toctree-l2">
@@ -290,6 +290,53 @@
 <h1><span class="section-number">5.9. </span>Query Example - Word Count<a class="headerlink" href="#query-example-word-count" title="Permalink to this headline">¶</a></h1>
 <p>Let us see how we can perform word count using Spark SQL. Using word count as an example we will understand how we can come up with the solution using pre-defined functions available.</p>
 <div class="cell tag_remove-input docutils container">
+</div>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+
+val username = System.getProperty(&quot;user.name&quot;)
+val spark = SparkSession.
+    builder.
+    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
+    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
+    enableHiveSupport.
+    appName(s&quot;${username} | Spark SQL - Predefined Functions&quot;).
+    master(&quot;yarn&quot;).
+    getOrCreate
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
 </div>
 <ul class="simple">
 <li><p>Create table by name lines.</p></li>

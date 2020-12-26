@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6.11. Exercises - Windowing Functions &#8212; Apache Spark using SQL</title>
+    <title>6.4. Exercises - Windowing Functions &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,7 +55,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="6.10. Filtering - Window Function Results" href="11_filtering_window_function_results.html" />
+    <link rel="prev" title="6.3. Aggregations using Windowing Functions" href="04_aggregations_using_windowing_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -116,7 +116,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -139,44 +139,9 @@
      6.3. Aggregations using Windowing Functions
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="05_cumulative_or_moving_aggregations.html">
-     6.4. Cumulative or Moving Aggregations
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="06_using_lead_or_lag.html">
-     6.5. Using LEAD or LAG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="07_getting_first_and_last_values.html">
-     6.6. Getting first and last values
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="08_ranking_using_windowing_functions.html">
-     6.7. Ranking using Windowing Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="09_order_of_execution_of_sql.html">
-     6.8. Order of execution of SQL
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="10_overview_of_sub_queries.html">
-     6.9. Overview of Sub Queries
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="11_filtering_window_function_results.html">
-     6.10. Filtering - Window Function Results
-    </a>
-   </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     6.11. Exercises - Windowing Functions
+     6.4. Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -290,27 +255,27 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-1">
-   6.11.1. Exercise 1
+   6.4.1. Exercise 1
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-2">
-   6.11.2. Exercise 2
+   6.4.2. Exercise 2
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-3">
-   6.11.3. Exercise 3
+   6.4.3. Exercise 3
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-4">
-   6.11.4. Exercise 4
+   6.4.4. Exercise 4
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-5">
-   6.11.5. Exercise 5
+   6.4.5. Exercise 5
   </a>
  </li>
 </ul>
@@ -325,7 +290,7 @@
               <div>
                 
   <div class="section" id="exercises-windowing-functions">
-<h1><span class="section-number">6.11. </span>Exercises - Windowing Functions<a class="headerlink" href="#exercises-windowing-functions" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">6.4. </span>Exercises - Windowing Functions<a class="headerlink" href="#exercises-windowing-functions" title="Permalink to this headline">¶</a></h1>
 <p>Let us take care of the exercises related to windowing or analytics functions. We will be using HR database for the same.</p>
 <ul class="simple">
 <li><p>Get all the employees who is making more than average salary with in each department.</p></li>
@@ -334,8 +299,55 @@
 <li><p>Get top 3 products sold in the month of 2014 January by revenue.</p></li>
 <li><p>Get top 3 products in each category sold in the month of 2014 January by revenue.</p></li>
 </ul>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+
+val username = System.getProperty(&quot;user.name&quot;)
+val spark = SparkSession.
+    builder.
+    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
+    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
+    enableHiveSupport.
+    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
+    master(&quot;yarn&quot;).
+    getOrCreate
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
 <div class="section" id="exercise-1">
-<h2><span class="section-number">6.11.1. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4.1. </span>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Get all the employees who is making more than average salary with in each department.</p>
 <ul class="simple">
 <li><p>Use HR database employees and department tables for this problem.</p></li>
@@ -547,7 +559,7 @@
 </table>
 </div>
 <div class="section" id="exercise-2">
-<h2><span class="section-number">6.11.2. </span>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4.2. </span>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Get cumulative salary with in each department for Finance and IT department along with department name.</p>
 <ul class="simple">
 <li><p>Use HR database employees and department tables for this problem.</p></li>
@@ -624,7 +636,7 @@
 </table>
 </div>
 <div class="section" id="exercise-3">
-<h2><span class="section-number">6.11.3. </span>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4.3. </span>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Get top 3 paid employees with in each department by salary (use dense_rank)</p>
 <ul class="simple">
 <li><p>Use HR database employees and department tables for this problem.</p></li>
@@ -802,7 +814,7 @@
 </table>
 </div>
 <div class="section" id="exercise-4">
-<h2><span class="section-number">6.11.4. </span>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4.4. </span>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Get top 3 products sold in the month of 2014 January by revenue.</p>
 <ul class="simple">
 <li><p>Use retail database tables such as orders, order_items and products.</p></li>
@@ -838,7 +850,7 @@
 </table>
 </div>
 <div class="section" id="exercise-5">
-<h2><span class="section-number">6.11.5. </span>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">6.4.5. </span>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Get top 3 products sold in the month of 2014 January under selected categories by revenue. The categories are <strong>Cardio Equipment</strong> and <strong>Strength Training</strong>.</p>
 <ul class="simple">
 <li><p>Use retail database tables such as orders, order_items, products as well as categories.</p></li>
@@ -925,7 +937,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="11_filtering_window_function_results.html" title="previous page"><span class="section-number">6.10. </span>Filtering - Window Function Results</a>
+    <a class='left-prev' id="prev-link" href="04_aggregations_using_windowing_functions.html" title="previous page"><span class="section-number">6.3. </span>Aggregations using Windowing Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

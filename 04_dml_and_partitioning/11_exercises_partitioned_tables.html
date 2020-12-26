@@ -55,7 +55,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="5. Pre-defined Functions" href="../05_predefined_functions/01_predefined_functions.html" />
+    <link rel="next" title="5. Predefined Functions" href="../05_predefined_functions/01_predefined_functions.html" />
     <link rel="prev" title="4.9. Using Dynamic Partition Mode" href="10_using_dynamic_partition_mode.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -169,7 +169,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -307,6 +307,53 @@
 <div class="cell_output docutils container">
 <div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/j7fTXOeJgGQ?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+
+val username = System.getProperty(&quot;user.name&quot;)
+val spark = SparkSession.
+    builder.
+    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
+    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
+    enableHiveSupport.
+    appName(s&quot;${username} | Spark SQL - Managing Tables - DML and Partitioning&quot;).
+    master(&quot;yarn&quot;).
+    getOrCreate
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
 <ul class="simple">
 <li><p>Duration: <strong>30 Minutes</strong></p></li>
 <li><p>Use data from <strong>/data/nyse_all/nyse_data</strong></p></li>
@@ -388,7 +435,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="10_using_dynamic_partition_mode.html" title="previous page"><span class="section-number">4.9. </span>Using Dynamic Partition Mode</a>
-    <a class='right-next' id="next-link" href="../05_predefined_functions/01_predefined_functions.html" title="next page"><span class="section-number">5. </span>Pre-defined Functions</a>
+    <a class='right-next' id="next-link" href="../05_predefined_functions/01_predefined_functions.html" title="next page"><span class="section-number">5. </span>Predefined Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

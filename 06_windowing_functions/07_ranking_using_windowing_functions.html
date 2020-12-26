@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6.9. Overview of Sub Queries &#8212; Apache Spark using SQL</title>
+    <title>Ranking using Windowing Functions &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,6 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6.10. Filtering - Window Function Results" href="11_filtering_window_function_results.html" />
-    <link rel="prev" title="6.8. Order of execution of SQL" href="09_order_of_execution_of_sql.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -94,7 +92,7 @@
   </a>
  </li>
 </ul>
-<ul class="current nav sidenav_l1">
+<ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    1. Getting Started
@@ -117,70 +115,13 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Pre-defined Functions
+   5. Predefined Functions
   </a>
  </li>
- <li class="toctree-l1 current active">
+ <li class="toctree-l1">
   <a class="reference internal" href="01_windowing_functions.html">
    6. Windowing Functions
   </a>
-  <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="02_prepare_database.html">
-     6.1. Prepare HR Database
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="03_overview_of_windowing_functions.html">
-     6.2. Overview of Windowing Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
-     6.3. Aggregations using Windowing Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="05_cumulative_or_moving_aggregations.html">
-     6.4. Cumulative or Moving Aggregations
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="06_using_lead_or_lag.html">
-     6.5. Using LEAD or LAG
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="07_getting_first_and_last_values.html">
-     6.6. Getting first and last values
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="08_ranking_using_windowing_functions.html">
-     6.7. Ranking using Windowing Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="09_order_of_execution_of_sql.html">
-     6.8. Order of execution of SQL
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     6.9. Overview of Sub Queries
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="11_filtering_window_function_results.html">
-     6.10. Filtering - Window Function Results
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.11. Exercises - Windowing Functions
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -224,7 +165,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/06_windowing_functions/10_overview_of_sub_queries.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/06_windowing_functions/07_ranking_using_windowing_functions.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -244,10 +185,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F06_windowing_functions/10_overview_of_sub_queries.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F06_windowing_functions/07_ranking_using_windowing_functions.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/06_windowing_functions/10_overview_of_sub_queries.ipynb"><button
+        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/06_windowing_functions/07_ranking_using_windowing_functions.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -267,7 +208,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/06_windowing_functions/10_overview_of_sub_queries.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/06_windowing_functions/07_ranking_using_windowing_functions.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -291,37 +232,67 @@
         
               <div>
                 
-  <div class="section" id="overview-of-sub-queries">
-<h1><span class="section-number">6.9. </span>Overview of Sub Queries<a class="headerlink" href="#overview-of-sub-queries" title="Permalink to this headline">¶</a></h1>
-<p>Let us recap about Sub Queries.</p>
+  <div class="section" id="ranking-using-windowing-functions">
+<h1>Ranking using Windowing Functions<a class="headerlink" href="#ranking-using-windowing-functions" title="Permalink to this headline">¶</a></h1>
+<p>Let us see how we can assign ranks using different <strong>rank</strong> functions.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/6AOlttTRG48?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/NsqHuZbUrAw?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
+</div>
+<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+
+val username = System.getProperty(&quot;user.name&quot;)
+val spark = SparkSession.
+    builder.
+    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
+    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
+    enableHiveSupport.
+    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
+    master(&quot;yarn&quot;).
+    getOrCreate
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
+<p><strong>Using Spark SQL</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Scala</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
+</div>
+<p><strong>Using Pyspark</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
+    --master yarn \
+    --conf spark.ui.port=0 \
+    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
+</pre></div>
 </div>
 <ul class="simple">
-<li><p>We typically have Sub Queries in <strong>FROM</strong> Clause.</p></li>
-<li><p>We need not provide alias to the Sub Queries in <strong>FROM</strong> Clause in Spark SQL. In earlier versions, you might have to provide alias for the Sub Query.</p></li>
-<li><p>We use Sub Queries quite often over queries using Analytics/Windowing Functions</p></li>
+<li><p>If we have to assign ranks globally, we just need to specify <strong>ORDER BY</strong></p></li>
+<li><p>If we have to assign ranks with in a key then we need to specify <strong>PARTITION BY</strong> and then <strong>ORDER BY</strong>.</p></li>
+<li><p>By default <strong>ORDER BY</strong> will sort the data in ascending order. We can change the order by passing <strong>DESC</strong> after order by.</p></li>
+<li><p>We have 3 main functions to assign ranks - <code class="docutils literal notranslate"><span class="pre">rank</span></code>, <code class="docutils literal notranslate"><span class="pre">dense_rank</span></code> and <code class="docutils literal notranslate"><span class="pre">row_number</span></code>. We will see the difference between the 3 in a moment.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-SELECT * FROM (SELECT current_date)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-SELECT * FROM (SELECT current_date) AS q
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let us see few more examples with respect to Sub Queries.</p>
+<p>Here is an example to assign sparse ranks using the table daily_product_revenue with in each day based on revenue. We can use <code class="docutils literal notranslate"><span class="pre">rank</span></code> function to assign sparse ranks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
@@ -335,30 +306,27 @@ USE itversity_retail
 <div class="cell_input docutils container">
 <div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
 
-SELECT * FROM (
-    SELECT order_date, count(1) AS order_count
-    FROM orders
-    GROUP BY order_date
-) q
-LIMIT 10
+SELECT t.*,
+  rank() OVER (
+    PARTITION BY order_date
+    ORDER BY revenue DESC
+  ) AS rnk
+FROM daily_product_revenue t
+ORDER BY order_date, revenue DESC
+LIMIT 100
 </pre></div>
 </div>
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Here is an example of how we can filter based up on the derived columns using sub query. However, this can be achieved with direct query as well using <code class="docutils literal notranslate"><span class="pre">HAVING</span></code>.</p>
+<p>Here is another example to assign ranks using employees data set with in each department. We can also use other functions such as <code class="docutils literal notranslate"><span class="pre">dense_rank</span></code> and <code class="docutils literal notranslate"><span class="pre">row_number</span></code> to assign ranks.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
 
-SELECT * FROM (
-    SELECT order_date, count(1) AS order_count
-    FROM orders
-    GROUP BY order_date
-) q
-WHERE q.order_count &gt; 10
+USE itversity_hr
 </pre></div>
 </div>
 </div>
@@ -367,14 +335,85 @@ WHERE q.order_count &gt; 10
 <div class="cell_input docutils container">
 <div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
 
-SELECT order_date, count(1) AS order_count
-FROM orders
-GROUP BY order_date
-    HAVING count(1) &gt; 10
+SELECT
+  employee_id,
+  department_id,
+  salary,
+  rank() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC
+  ) rnk,
+  dense_rank() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC
+  ) drnk,
+  row_number() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC
+  ) rn
+FROM employees
+ORDER BY department_id, salary DESC
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
+SELECT
+  employee_id,
+  department_id,
+  salary,
+  rank() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC
+  ) rnk,
+  dense_rank() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC
+  ) drnk,
+  row_number() OVER (
+    PARTITION BY department_id
+    ORDER BY salary DESC, employee_id
+  ) rn
+FROM employees
+ORDER BY department_id, salary DESC
+&quot;&quot;&quot;).
+    show(100, false)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM employees ORDER BY salary LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Here is the example for global rank with out <code class="docutils literal notranslate"><span class="pre">PARTITION</span> <span class="pre">BY</span></code> clause.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT employee_id, salary,
+    dense_rank() OVER (ORDER BY salary DESC) AS drnk
+FROM employees
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us understand the difference between <strong>rank</strong>, <strong>dense_rank</strong> and <strong>row_number</strong>.</p>
+<ul class="simple">
+<li><p>We can use either of the functions to generate ranks when there are no duplicates in the column based on which ranks are assigned.</p></li>
+<li><p>When the column based on which ranks are assigned have duplicates then row_number should not be used as it generate unique number for each record with in the partition. For those duplicate values, the row number need not be same across multiple runs.</p></li>
+<li><p><strong>rank</strong> will skip the ranks in between if multiple people get the same rank while <strong>dense_rank</strong> will not skip the ranks based up on the number of times the value is repeated.</p></li>
+</ul>
 </div>
 
     <script type="text/x-thebe-config">
@@ -405,8 +444,6 @@ GROUP BY order_date
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="09_order_of_execution_of_sql.html" title="previous page"><span class="section-number">6.8. </span>Order of execution of SQL</a>
-    <a class='right-next' id="next-link" href="11_filtering_window_function_results.html" title="next page"><span class="section-number">6.10. </span>Filtering - Window Function Results</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
