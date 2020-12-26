@@ -1,4 +1,17 @@
-exclude_patterns: [_build, README]
+title                       : Apache Spark using SQL
+author                      : Durga Gadiraju
+copyright                   : "ITVersity, Inc" 
+
+repository:
+  url                       : https://github.com/itversity/spark-sql
+html:
+  use_repository_button     : true
+  use_issues_button         : true
+  use_edit_page_button      : true
+  extra_navbar              : Subscribe to our <a href="http://notifyme.itversity.com">Newsletter</a>
+  google_analytics_id       : UA-80990145-12
+
+exclude_patterns            : [_build, README.md, "**.ipynb_checkpoints"]
 
 execute:
   execute_notebooks         : off
