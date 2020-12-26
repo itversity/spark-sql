@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.5. Filtering Data &#8212; My Jupyter Book</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.6. Joining Tables - Inner" href="07_joining_tables_inner.html" />
+    <link rel="prev" title="2.4. Projecting Data" href="05_projecting_data.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../spark-sql.html">
+   Apache Spark using SQL
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_getting_started/01_getting_started.html">
+   1. Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="01_basic_transformations.html">
+   2. Basic Transformations
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_spark_sql_overview.html">
+     2.1. Spark SQL – Overview
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_define_problem_statement.html">
+     2.2. Define Problem Statement
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_preparing_tables.html">
+     2.3. Preparing Tables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_projecting_data.html">
+     2.4. Projecting Data
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.5. Filtering Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_joining_tables_inner.html">
+     2.6. Joining Tables - Inner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_joining_tables_outer.html">
+     2.7. Joining Tables - Outer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_aggregating_data.html">
+     2.8. Basic Transformations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_sorting_data.html">
+     2.9. Basic Transformations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_conclusion_final_solution.html">
+     2.10. Basic Transformations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_basic_sql_queries.html">
+     2.11. Basic Transformations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
+   3. Basic DDL and DML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
+   4. DML and Partitioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
+   5. Pre-defined Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../06_windowing_functions/01_windowing_functions.html">
+   6. Windowing Functions
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/02_basic_transformations/06_filtering_data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/02_basic_transformations/06_filtering_data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="filtering-data">
+<h1><span class="section-number">2.5. </span>Filtering Data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h1>
+<p>Let us understand how we can filter the data in Spark SQL.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/x6sUnQ553Ow?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
+</div>
+<ul class="simple">
+<li><p>We use <code class="docutils literal notranslate"><span class="pre">WHERE</span></code> clause to filter the data.</p></li>
+<li><p>All comparison operators such as <code class="docutils literal notranslate"><span class="pre">=</span></code>, <code class="docutils literal notranslate"><span class="pre">!=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, etc can be used to compare a column or expression or literal with another column or expression or literal.</p></li>
+<li><p>We can use operators such as LIKE with % and regexp_like for pattern matching.</p></li>
+<li><p>Boolan OR and AND can be performed when we want to apply multiple conditions.</p>
+<ul>
+<li><p>Get all orders with order_status equals to COMPLETE or CLOSED. We can also use IN operator.</p></li>
+<li><p>Get all orders from month 2014 January with order_status equals to COMPLETE or CLOSED</p></li>
+</ul>
+</li>
+<li><p>We need to use <code class="docutils literal notranslate"><span class="pre">IS</span> <span class="pre">NULL</span></code> and <code class="docutils literal notranslate"><span class="pre">IS</span> <span class="pre">NOT</span> <span class="pre">NULL</span></code> to compare against null values.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">SHOW</span> <span class="n">tables</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders WHERE order_status = &#39;COMPLETE&#39; LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT count(1) FROM orders WHERE order_status = &#39;COMPLETE&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;) LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders WHERE order_status = &#39;COMPLETE&#39; OR order_status = &#39;CLOSED&#39; LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT count(1) FROM orders WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT count(1) FROM orders WHERE order_status = &#39;COMPLETE&#39; OR order_status = &#39;CLOSED&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders 
+WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+    AND order_date LIKE &#39;2014-01%&#39;
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT count(1) FROM orders 
+WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+    AND order_date LIKE &#39;2014-01%&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders 
+WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+    AND date_format(order_date, &#39;yyyy-MM&#39;) = &#39;2014-01&#39;
+LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT count(1) FROM orders 
+WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)
+    AND date_format(order_date, &#39;yyyy-MM&#39;) = &#39;2014-01&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Using Spark SQL with Python or Scala</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;USE itversity_retail&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;SHOW tables&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;SELECT * FROM orders WHERE order_status = &#39;COMPLETE&#39;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;SELECT count(1) FROM orders WHERE order_status = &#39;COMPLETE&#39;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;SELECT * FROM orders WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM orders </span>
+<span class="s">WHERE order_status = &#39;COMPLETE&#39; OR order_status = &#39;CLOSED&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT count(1) FROM orders </span>
+<span class="s">WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT count(1) FROM orders</span>
+<span class="s">WHERE order_status = &#39;COMPLETE&#39; OR order_status = &#39;CLOSED&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM orders </span>
+<span class="s">WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)</span>
+<span class="s">    AND order_date LIKE &#39;2014-01%&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT count(1) FROM orders </span>
+<span class="s">WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)</span>
+<span class="s">    AND order_date LIKE &#39;2014-01%&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM orders </span>
+<span class="s">WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)</span>
+<span class="s">    AND date_format(order_date, &#39;yyyy-MM&#39;) = &#39;2014-01&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT count(1) FROM orders </span>
+<span class="s">WHERE order_status IN (&#39;COMPLETE&#39;, &#39;CLOSED&#39;)</span>
+<span class="s">    AND date_format(order_date, &#39;yyyy-MM&#39;) = &#39;2014-01&#39;</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Let us prepare the table to demonstrate how to deal with null values while filtering the data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">DROP</span> <span class="nc">DATABASE</span> <span class="nc">IF</span> <span class="nc">EXISTS</span> <span class="n">itversity_sms</span> <span class="nc">CASCADE</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">CREATE</span> <span class="nc">DATABASE</span> <span class="nc">IF</span> <span class="nc">NOT</span> <span class="nc">EXISTS</span> <span class="n">itversity_sms</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">DROP</span> <span class="nc">TABLE</span> <span class="nc">IF</span> <span class="nc">EXISTS</span> <span class="n">students</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">CREATE</span> <span class="nc">TABLE</span> <span class="n">students</span> <span class="o">(</span>
+    <span class="n">student_id</span> <span class="nc">INT</span><span class="o">,</span>
+    <span class="n">student_first_name</span> <span class="nc">STRING</span><span class="o">,</span>
+    <span class="n">student_last_name</span> <span class="nc">STRING</span><span class="o">,</span>
+    <span class="n">student_phone_number</span> <span class="nc">STRING</span><span class="o">,</span>
+    <span class="n">student_address</span> <span class="nc">STRING</span>
+<span class="o">)</span> <span class="nc">STORED</span> <span class="nc">AS</span> <span class="n">avro</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+INSERT INTO students VALUES (1, &#39;Scott&#39;, &#39;Tiger&#39;, NULL, NULL)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+INSERT INTO students VALUES (2, &#39;Donald&#39;, &#39;Duck&#39;, &#39;1234567890&#39;, NULL)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
+
+INSERT INTO students VALUES 
+    (3, &#39;Mickey&#39;, &#39;Mouse&#39;, &#39;2345678901&#39;, &#39;A Street, One City, Some State, 12345&#39;),
+    (4, &#39;Bubble&#39;, &#39;Guppy&#39;, &#39;6789012345&#39;, &#39;Bubbly Street, Guppy, La la land, 45678&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
+
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="n">students</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Using Spark SQL with Python or Scala</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;DROP DATABASE IF EXISTS itversity_sms CASCADE&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;CREATE DATABASE IF NOT EXISTS itversity_sms&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;DROP TABLE IF EXISTS students&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">CREATE TABLE students (</span>
+<span class="s">    student_id INT,</span>
+<span class="s">    student_first_name STRING,</span>
+<span class="s">    student_last_name STRING,</span>
+<span class="s">    student_phone_number STRING,</span>
+<span class="s">    student_address STRING</span>
+<span class="s">) STORED AS avro</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">INSERT INTO students </span>
+<span class="s">VALUES (1, &#39;Scott&#39;, &#39;Tiger&#39;, NULL, NULL)</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">INSERT INTO students </span>
+<span class="s">VALUES (2, &#39;Donald&#39;, &#39;Duck&#39;, &#39;1234567890&#39;, NULL)</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">INSERT INTO students VALUES </span>
+<span class="s">    (3, &#39;Mickey&#39;, &#39;Mouse&#39;, &#39;2345678901&#39;, &#39;A Street, One City, Some State, 12345&#39;),</span>
+<span class="s">    (4, &#39;Bubble&#39;, &#39;Guppy&#39;, &#39;6789012345&#39;, &#39;Bubbly Street, Guppy, La la land, 45678&#39;)</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;SELECT * FROM students&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Comparison against null can be done with <code class="docutils literal notranslate"><span class="pre">IS</span> <span class="pre">NULL</span></code> and <code class="docutils literal notranslate"><span class="pre">IS</span> <span class="pre">NOT</span> <span class="pre">NULL</span></code>. Below query will not work even though we have one record with phone_numbers as null.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM students </span>
+<span class="s">WHERE student_phone_number = NULL</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM students </span>
+<span class="s">WHERE student_phone_number != NULL</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM students</span>
+<span class="s">WHERE student_phone_number IS NULL</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT * FROM students</span>
+<span class="s">WHERE student_phone_number IS NOT NULL</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span><span class="n">show</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "apache_toree_scala"
+        },
+        kernelOptions: {
+            kernelName: "apache_toree_scala",
+            path: "./02_basic_transformations"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'apache_toree_scala'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="05_projecting_data.html" title="previous page"><span class="section-number">2.4. </span>Projecting Data</a>
+    <a class='right-next' id="next-link" href="07_joining_tables_inner.html" title="next page"><span class="section-number">2.6. </span>Joining Tables - Inner</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

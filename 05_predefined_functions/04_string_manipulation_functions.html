@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.3. String Manipulation Functions &#8212; My Jupyter Book</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.4. Date Manipulation Functions" href="05_date_manipulation_functions.html" />
+    <link rel="prev" title="5.2. Validating Functions" href="03_validating_functions.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../spark-sql.html">
+   Apache Spark using SQL
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_getting_started/01_getting_started.html">
+   1. Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../02_basic_transformations/01_basic_transformations.html">
+   2. Basic Transformations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
+   3. Basic DDL and DML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
+   4. DML and Partitioning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="01_predefined_functions.html">
+   5. Pre-defined Functions
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_overview_of_functions.html">
+     5.1. Overview of Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_validating_functions.html">
+     5.2. Validating Functions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     5.3. String Manipulation Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_date_manipulation_functions.html">
+     5.4. Date Manipulation Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_overview_of_numeric_functions.html">
+     5.5. Overview of Numeric Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_data_type_conversion.html">
+     5.6. Data Type Conversion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_handling_null_values.html">
+     5.7. Handling NULL Values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_using_case_and_when.html">
+     5.8. Using CASE and WHEN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_query_example_word_count.html">
+     5.9. Query Example - Word Count
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_exercises_pre_defined_functions.html">
+     5.10. Exercises - Pre-Defined Functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../06_windowing_functions/01_windowing_functions.html">
+   6. Windowing Functions
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/05_predefined_functions/04_string_manipulation_functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/05_predefined_functions/04_string_manipulation_functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#case-conversion-and-length">
+   5.3.1. Case Conversion and Length
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#extracting-data-substr-and-split">
+   5.3.2. Extracting Data - substr and split
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#trimming-and-padding-functions">
+   5.3.3. Trimming and Padding Functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reverse-and-concatenating-multiple-strings">
+   5.3.4. Reverse and Concatenating multiple strings
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="string-manipulation-functions">
+<h1><span class="section-number">5.3. </span>String Manipulation Functions<a class="headerlink" href="#string-manipulation-functions" title="Permalink to this headline">¶</a></h1>
+<p>We use string manipulation functions quite extensively. Here are some of the important functions which we typically use.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/Y5e3DzB0i4c?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
+</div>
+<ul class="simple">
+<li><p>Case Conversion - <code class="docutils literal notranslate"><span class="pre">lower</span></code>, <code class="docutils literal notranslate"><span class="pre">upper</span></code>, <code class="docutils literal notranslate"><span class="pre">initcap</span></code></p></li>
+<li><p>Getting size of the column value - <code class="docutils literal notranslate"><span class="pre">length</span></code></p></li>
+<li><p>Extracting Data - <code class="docutils literal notranslate"><span class="pre">substr</span></code> and <code class="docutils literal notranslate"><span class="pre">split</span></code></p></li>
+<li><p>Trimming and Padding functions - <code class="docutils literal notranslate"><span class="pre">trim</span></code>, <code class="docutils literal notranslate"><span class="pre">rtrim</span></code>, <code class="docutils literal notranslate"><span class="pre">ltrim</span></code>, <code class="docutils literal notranslate"><span class="pre">rpad</span></code> and <code class="docutils literal notranslate"><span class="pre">lpad</span></code></p></li>
+<li><p>Reversing strings - <code class="docutils literal notranslate"><span class="pre">reverse</span></code></p></li>
+<li><p>Concatenating multiple strings <code class="docutils literal notranslate"><span class="pre">concat</span></code> and <code class="docutils literal notranslate"><span class="pre">concat_ws</span></code></p></li>
+</ul>
+<div class="section" id="case-conversion-and-length">
+<h2><span class="section-number">5.3.1. </span>Case Conversion and Length<a class="headerlink" href="#case-conversion-and-length" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to perform case conversion functions of a string and also length of a string.</p>
+<ul class="simple">
+<li><p>Case Conversion Functions - <code class="docutils literal notranslate"><span class="pre">lower</span></code>, <code class="docutils literal notranslate"><span class="pre">upper</span></code>, <code class="docutils literal notranslate"><span class="pre">initcap</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT lower(&#39;hEllo wOrlD&#39;) AS lower_result,
+    upper(&#39;hEllo wOrlD&#39;) AS upper_result,
+    initcap(&#39;hEllo wOrlD&#39;) AS initcap_result
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Getting length - <code class="docutils literal notranslate"><span class="pre">length</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT length(&#39;hEllo wOrlD&#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us see how to use these functions on top of the table. We will use orders table which was loaded as part of last section.</p>
+<ul class="simple">
+<li><p>order_status for some of the orders is in lower case and we will convert every thing to upper case.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+USE itversity_retail
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql 
+
+SHOW tables
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT order_id, order_date, order_customer_id,
+    lower(order_status) AS order_status,
+    length(order_status) AS order_status_length
+FROM orders LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="extracting-data-substr-and-split">
+<h2><span class="section-number">5.3.2. </span>Extracting Data - substr and split<a class="headerlink" href="#extracting-data-substr-and-split" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to extract data from strings using <code class="docutils literal notranslate"><span class="pre">substr</span></code>/<code class="docutils literal notranslate"><span class="pre">substring</span></code> and <code class="docutils literal notranslate"><span class="pre">split</span></code>.</p>
+<ul class="simple">
+<li><p>We can get syntax and symantecs of the functions using <code class="docutils literal notranslate"><span class="pre">DESCRIBE</span> <span class="pre">FUNCTION</span></code></p></li>
+<li><p>We can extract first four characters from string using substr or substring.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+DESCRIBE FUNCTION substr
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+DESCRIBE FUNCTION substring
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;DESCRIBE FUNCTION substring&quot;).show(false)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT substr(&#39;2013-07-25 00:00:00.0&#39;, 1, 4) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT substr(&#39;2013-07-25 00:00:00.0&#39;, 6, 2) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT substr(&#39;2013-07-25 00:00:00.0&#39;, 9, 2) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT substr(&#39;2013-07-25 00:00:00.0&#39;, 12) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Let us see how we can extract date part from order_date of orders.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM orders LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT order_id,
+  substr(order_date, 1, 10) AS order_date,
+  order_customer_id,
+  order_status
+FROM orders
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us understand how to extract the information from the string where there is a delimiter.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code> converts delimited string into array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT split(&#39;2013-07-25&#39;, &#39;-&#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT split(&#39;2013-07-25&#39;, &#39;-&#39;)[1] AS result
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We can use explode to convert an array into records.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT explode(split(&#39;2013-07-25&#39;, &#39;-&#39;)) AS result
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="trimming-and-padding-functions">
+<h2><span class="section-number">5.3.3. </span>Trimming and Padding Functions<a class="headerlink" href="#trimming-and-padding-functions" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to trim or remove leading and/or trailing spaces in a string.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ltrim</span></code> is used to remove the spaces on the left side of the string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rtrim</span></code> is used to remove the spaces on the right side of the string.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trim</span></code> is used to remove the spaces on both sides of the string.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT ltrim(&#39;     Hello World&#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT rtrim(&#39;     Hello World       &#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT length(trim(&#39;     Hello World       &#39;)) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us understand how to use padding to pad characters to a string.</p>
+<ul class="simple">
+<li><p>Let us assume that there are 3 fields - year, month and date which are of type integer.</p></li>
+<li><p>If we have to concatenate all the 3 fields and create a date, we might have to pad month and date with 0.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lpad</span></code> is used more often than <code class="docutils literal notranslate"><span class="pre">rpad</span></code> especially when we try to build the date from separate columns.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT 2013 AS year, 7 AS month, 25 AS myDate
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT lpad(7, 2, 0) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT lpad(10, 2, 0) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT lpad(100, 2, 0) AS result
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="reverse-and-concatenating-multiple-strings">
+<h2><span class="section-number">5.3.4. </span>Reverse and Concatenating multiple strings<a class="headerlink" href="#reverse-and-concatenating-multiple-strings" title="Permalink to this headline">¶</a></h2>
+<p>Let us understand how to reverse a string as well as concatenate multiple strings.</p>
+<ul class="simple">
+<li><p>We can use <code class="docutils literal notranslate"><span class="pre">reverse</span></code> to reverse a string.</p></li>
+<li><p>We can concatenate multiple strings using <code class="docutils literal notranslate"><span class="pre">concat</span></code> and <code class="docutils literal notranslate"><span class="pre">concat_ws</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">concat_ws</span></code> is typically used if we want to have the same string between all the strings that are being concatenated.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT reverse(&#39;Hello World&#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT concat(&#39;Hello &#39;, &#39;World&#39;) AS result
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT concat(&#39;Order Status is &#39;, order_status) AS result
+FROM orders LIMIT 10
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
+    SELECT concat(&#39;Order Status is &#39;, order_status) AS result
+    FROM orders_part LIMIT 10
+&quot;&quot;&quot;).show(false)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT * FROM (SELECT 2013 AS year, 7 AS month, 25 AS myDate) q
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT concat(year, &#39;-&#39;, lpad(month, 2, 0), &#39;-&#39;,
+              lpad(myDate, 2, 0)) AS order_date
+FROM
+    (SELECT 2013 AS year, 7 AS month, 25 AS myDate) q
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+
+SELECT concat_ws(&#39;-&#39;, year, lpad(month, 2, 0),
+              lpad(myDate, 2, 0)) AS order_date
+FROM
+    (SELECT 2013 AS year, 7 AS month, 25 AS myDate) q
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "apache_toree_scala"
+        },
+        kernelOptions: {
+            kernelName: "apache_toree_scala",
+            path: "./05_predefined_functions"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'apache_toree_scala'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="03_validating_functions.html" title="previous page"><span class="section-number">5.2. </span>Validating Functions</a>
+    <a class='right-next' id="next-link" href="05_date_manipulation_functions.html" title="next page"><span class="section-number">5.4. </span>Date Manipulation Functions</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By The Jupyter Book community<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
