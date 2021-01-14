@@ -1,5 +1,4 @@
 - file: spark-sql.ipynb
-  numbered: true
 
 - file: 01_getting_started/01_getting_started.ipynb
   sections:
