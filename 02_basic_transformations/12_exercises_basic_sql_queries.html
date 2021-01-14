@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>2.11. Exercises - Basic SQL Queries &#8212; Apache Spark using SQL</title>
+    <title>Exercises - Basic SQL Queries &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Basic DDL and DML" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html" />
-    <link rel="prev" title="2.10. Conclusion - Final Solution" href="11_conclusion_final_solution.html" />
+    <link rel="next" title="Basic DDL and DML" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html" />
+    <link rel="prev" title="Conclusion - Final Solution" href="11_conclusion_final_solution.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,89 +97,89 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
-   1. Getting Started
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="reference internal" href="01_basic_transformations.html">
-   2. Basic Transformations
+   Basic Transformations
   </a>
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="02_spark_sql_overview.html">
-     2.1. Spark SQL – Overview
+     Spark SQL – Overview
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="03_define_problem_statement.html">
-     2.2. Define Problem Statement
+     Define Problem Statement
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="04_preparing_tables.html">
-     2.3. Preparing Tables
+     Preparing Tables
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="05_projecting_data.html">
-     2.4. Projecting Data
+     Projecting Data
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="06_filtering_data.html">
-     2.5. Filtering Data
+     Filtering Data
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="07_joining_tables_inner.html">
-     2.6. Joining Tables - Inner
+     Joining Tables - Inner
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="08_joining_tables_outer.html">
-     2.7. Joining Tables - Outer
+     Joining Tables - Outer
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="09_aggregating_data.html">
-     2.8. Aggregating Data
+     Aggregating Data
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="10_sorting_data.html">
-     2.9. Sorting Data
+     Sorting Data
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="11_conclusion_final_solution.html">
-     2.10. Conclusion - Final Solution
+     Conclusion - Final Solution
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     2.11. Exercises - Basic SQL Queries
+     Exercises - Basic SQL Queries
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
-   3. Basic DDL and DML
+   Basic DDL and DML
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
-   4. DML and Partitioning
+   DML and Partitioning
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Predefined Functions
+   Predefined Functions
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../06_windowing_functions/01_windowing_functions.html">
-   6. Windowing Functions
+   Windowing Functions
   </a>
  </li>
 </ul>
@@ -291,27 +291,27 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-1-customer-order-count">
-   2.11.1. Exercise 1 - Customer order count
+   Exercise 1 - Customer order count
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-2-dormant-customers">
-   2.11.2. Exercise 2 - Dormant Customers
+   Exercise 2 - Dormant Customers
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-3-revenue-per-customer">
-   2.11.3. Exercise 3 - Revenue Per Customer
+   Exercise 3 - Revenue Per Customer
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-4-revenue-per-category">
-   2.11.4. Exercise 4 - Revenue Per Category
+   Exercise 4 - Revenue Per Category
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#exercise-5-product-count-per-department">
-   2.11.5. Exercise 5 - Product Count Per Department
+   Exercise 5 - Product Count Per Department
   </a>
  </li>
 </ul>
@@ -326,7 +326,7 @@
               <div>
                 
   <div class="section" id="exercises-basic-sql-queries">
-<h1><span class="section-number">2.11. </span>Exercises - Basic SQL Queries<a class="headerlink" href="#exercises-basic-sql-queries" title="Permalink to this headline">¶</a></h1>
+<h1>Exercises - Basic SQL Queries<a class="headerlink" href="#exercises-basic-sql-queries" title="Permalink to this headline">¶</a></h1>
 <p>Here are some of the exercises for which you can write SQL queries to self evaluate.</p>
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
@@ -376,7 +376,7 @@
 </pre></div>
 </div>
 <div class="section" id="exercise-1-customer-order-count">
-<h2><span class="section-number">2.11.1. </span>Exercise 1 - Customer order count<a class="headerlink" href="#exercise-1-customer-order-count" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 1 - Customer order count<a class="headerlink" href="#exercise-1-customer-order-count" title="Permalink to this headline">¶</a></h2>
 <p>Get order count per customer for the month of 2014 January.</p>
 <ul class="simple">
 <li><p>Tables - orders and customers</p></li>
@@ -385,7 +385,7 @@
 </ul>
 </div>
 <div class="section" id="exercise-2-dormant-customers">
-<h2><span class="section-number">2.11.2. </span>Exercise 2 - Dormant Customers<a class="headerlink" href="#exercise-2-dormant-customers" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 2 - Dormant Customers<a class="headerlink" href="#exercise-2-dormant-customers" title="Permalink to this headline">¶</a></h2>
 <p>Get the customer details who have not placed any order for the month of 2014 January.</p>
 <ul class="simple">
 <li><p>Tables - orders and customers</p></li>
@@ -394,7 +394,7 @@
 </ul>
 </div>
 <div class="section" id="exercise-3-revenue-per-customer">
-<h2><span class="section-number">2.11.3. </span>Exercise 3 - Revenue Per Customer<a class="headerlink" href="#exercise-3-revenue-per-customer" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 3 - Revenue Per Customer<a class="headerlink" href="#exercise-3-revenue-per-customer" title="Permalink to this headline">¶</a></h2>
 <p>Get the revenue generated by each customer for the month of 2014 January</p>
 <ul class="simple">
 <li><p>Tables - orders, order_items and customers</p></li>
@@ -405,7 +405,7 @@
 </ul>
 </div>
 <div class="section" id="exercise-4-revenue-per-category">
-<h2><span class="section-number">2.11.4. </span>Exercise 4 - Revenue Per Category<a class="headerlink" href="#exercise-4-revenue-per-category" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 4 - Revenue Per Category<a class="headerlink" href="#exercise-4-revenue-per-category" title="Permalink to this headline">¶</a></h2>
 <p>Get the revenue generated for each category for the month of 2014 January</p>
 <ul class="simple">
 <li><p>Tables - orders, order_items, products and categories</p></li>
@@ -415,7 +415,7 @@
 </ul>
 </div>
 <div class="section" id="exercise-5-product-count-per-department">
-<h2><span class="section-number">2.11.5. </span>Exercise 5 - Product Count Per Department<a class="headerlink" href="#exercise-5-product-count-per-department" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 5 - Product Count Per Department<a class="headerlink" href="#exercise-5-product-count-per-department" title="Permalink to this headline">¶</a></h2>
 <p>Get the products for each department.</p>
 <ul class="simple">
 <li><p>Tables - departments, categories, products</p></li>
@@ -453,8 +453,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="11_conclusion_final_solution.html" title="previous page"><span class="section-number">2.10. </span>Conclusion - Final Solution</a>
-    <a class='right-next' id="next-link" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html" title="next page"><span class="section-number">3. </span>Basic DDL and DML</a>
+    <a class='left-prev' id="prev-link" href="11_conclusion_final_solution.html" title="previous page">Conclusion - Final Solution</a>
+    <a class='right-next' id="next-link" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html" title="next page">Basic DDL and DML</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

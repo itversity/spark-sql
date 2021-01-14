@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5.4. Date Manipulation Functions &#8212; Apache Spark using SQL</title>
+    <title>Date Manipulation Functions &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="5.5. Overview of Numeric Functions" href="06_overview_of_numeric_functions.html" />
-    <link rel="prev" title="5.3. String Manipulation Functions" href="04_string_manipulation_functions.html" />
+    <link rel="next" title="Overview of Numeric Functions" href="06_overview_of_numeric_functions.html" />
+    <link rel="prev" title="String Manipulation Functions" href="04_string_manipulation_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,84 +97,84 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
-   1. Getting Started
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../02_basic_transformations/01_basic_transformations.html">
-   2. Basic Transformations
+   Basic Transformations
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
-   3. Basic DDL and DML
+   Basic DDL and DML
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
-   4. DML and Partitioning
+   DML and Partitioning
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="reference internal" href="01_predefined_functions.html">
-   5. Predefined Functions
+   Predefined Functions
   </a>
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="02_overview_of_functions.html">
-     5.1. Overview of Functions
+     Overview of Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="03_validating_functions.html">
-     5.2. Validating Functions
+     Validating Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="04_string_manipulation_functions.html">
-     5.3. String Manipulation Functions
+     String Manipulation Functions
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     5.4. Date Manipulation Functions
+     Date Manipulation Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="06_overview_of_numeric_functions.html">
-     5.5. Overview of Numeric Functions
+     Overview of Numeric Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="07_data_type_conversion.html">
-     5.6. Data Type Conversion
+     Data Type Conversion
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="08_handling_null_values.html">
-     5.7. Handling NULL Values
+     Handling NULL Values
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="09_using_case_and_when.html">
-     5.8. Using CASE and WHEN
+     Using CASE and WHEN
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="10_query_example_word_count.html">
-     5.9. Query Example - Word Count
+     Query Example - Word Count
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="11_exercises_pre_defined_functions.html">
-     5.10. Exercises - Pre-Defined Functions
+     Exercises - Pre-Defined Functions
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../06_windowing_functions/01_windowing_functions.html">
-   6. Windowing Functions
+   Windowing Functions
   </a>
  </li>
 </ul>
@@ -286,32 +286,32 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#getting-current-date-and-timestamp">
-   5.4.1. Getting Current Date and Timestamp
+   Getting Current Date and Timestamp
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#date-arithmetic">
-   5.4.2. Date Arithmetic
+   Date Arithmetic
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#beginning-date-or-time-trunc-and-date-trunc">
-   5.4.3. Beginning Date or Time - trunc and date_trunc
+   Beginning Date or Time - trunc and date_trunc
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#extracting-information-using-date-format">
-   5.4.4. Extracting information using date_format
+   Extracting information using date_format
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#extracting-information-calendar-functions">
-   5.4.5. Extracting information - Calendar functions
+   Extracting information - Calendar functions
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#dealing-with-unix-timestamp">
-   5.4.6. Dealing with Unix Timestamp
+   Dealing with Unix Timestamp
   </a>
  </li>
 </ul>
@@ -326,7 +326,7 @@
               <div>
                 
   <div class="section" id="date-manipulation-functions">
-<h1><span class="section-number">5.4. </span>Date Manipulation Functions<a class="headerlink" href="#date-manipulation-functions" title="Permalink to this headline">¶</a></h1>
+<h1>Date Manipulation Functions<a class="headerlink" href="#date-manipulation-functions" title="Permalink to this headline">¶</a></h1>
 <p>Let us go through some of the important date manipulation functions.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -387,7 +387,7 @@ val spark = SparkSession.
 <li><p>Dealing with unix timestamp using <code class="docutils literal notranslate"><span class="pre">from_unixtime</span></code>, <code class="docutils literal notranslate"><span class="pre">to_unix_timestamp</span></code></p></li>
 </ul>
 <div class="section" id="getting-current-date-and-timestamp">
-<h2><span class="section-number">5.4.1. </span>Getting Current Date and Timestamp<a class="headerlink" href="#getting-current-date-and-timestamp" title="Permalink to this headline">¶</a></h2>
+<h2>Getting Current Date and Timestamp<a class="headerlink" href="#getting-current-date-and-timestamp" title="Permalink to this headline">¶</a></h2>
 <p>Let us understand how to get the details about current or today’s date as well as current timestamp.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">current_date</span></code> is the function or operator which will return today’s date.</p></li>
@@ -438,7 +438,7 @@ SELECT current_timestamp AS current_timestamp
 </div>
 </div>
 <div class="section" id="date-arithmetic">
-<h2><span class="section-number">5.4.2. </span>Date Arithmetic<a class="headerlink" href="#date-arithmetic" title="Permalink to this headline">¶</a></h2>
+<h2>Date Arithmetic<a class="headerlink" href="#date-arithmetic" title="Permalink to this headline">¶</a></h2>
 <p>Let us understand how to perform arithmetic on dates or timestamps.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">date_add</span></code> can be used to add or subtract days.</p></li>
@@ -547,7 +547,7 @@ SELECT date_add(current_timestamp, -730) AS result
 </div>
 </div>
 <div class="section" id="beginning-date-or-time-trunc-and-date-trunc">
-<h2><span class="section-number">5.4.3. </span>Beginning Date or Time - trunc and date_trunc<a class="headerlink" href="#beginning-date-or-time-trunc-and-date-trunc" title="Permalink to this headline">¶</a></h2>
+<h2>Beginning Date or Time - trunc and date_trunc<a class="headerlink" href="#beginning-date-or-time-trunc-and-date-trunc" title="Permalink to this headline">¶</a></h2>
 <p>Let us understand how to use <code class="docutils literal notranslate"><span class="pre">trunc</span></code> and <code class="docutils literal notranslate"><span class="pre">date_trunc</span></code> on dates or timestamps and get beginning date of the period.</p>
 <ul class="simple">
 <li><p>We can use <strong>MM</strong> to get beginning date of the month.</p></li>
@@ -630,7 +630,7 @@ SELECT date_trunc(&#39;HOUR&#39;, current_timestamp) AS hour_beginning
 </div>
 </div>
 <div class="section" id="extracting-information-using-date-format">
-<h2><span class="section-number">5.4.4. </span>Extracting information using date_format<a class="headerlink" href="#extracting-information-using-date-format" title="Permalink to this headline">¶</a></h2>
+<h2>Extracting information using date_format<a class="headerlink" href="#extracting-information-using-date-format" title="Permalink to this headline">¶</a></h2>
 <p>Let us understand how to use <code class="docutils literal notranslate"><span class="pre">date_format</span></code> to extract information from date or timestamp.</p>
 <p>Here is how we can get date related information such as year, month, day etc from date or timestamp.</p>
 <div class="cell docutils container">
@@ -824,7 +824,7 @@ SELECT date_format(current_timestamp, &#39;yyyy/MM/dd&#39;) AS current_date
 </div>
 </div>
 <div class="section" id="extracting-information-calendar-functions">
-<h2><span class="section-number">5.4.5. </span>Extracting information - Calendar functions<a class="headerlink" href="#extracting-information-calendar-functions" title="Permalink to this headline">¶</a></h2>
+<h2>Extracting information - Calendar functions<a class="headerlink" href="#extracting-information-calendar-functions" title="Permalink to this headline">¶</a></h2>
 <p>We can get year, month, day etc from date or timestamp using functions. There are functions such as <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">dayofmonth</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">weekofyear</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> etc available for us.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -911,7 +911,7 @@ SELECT dayofmonth(current_date) AS dayofmonth
 </div>
 </div>
 <div class="section" id="dealing-with-unix-timestamp">
-<h2><span class="section-number">5.4.6. </span>Dealing with Unix Timestamp<a class="headerlink" href="#dealing-with-unix-timestamp" title="Permalink to this headline">¶</a></h2>
+<h2>Dealing with Unix Timestamp<a class="headerlink" href="#dealing-with-unix-timestamp" title="Permalink to this headline">¶</a></h2>
 <p>Let us go through the functions that can be used to deal with Unix Timestamp.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">from_unixtime</span></code> can be used to convert Unix epoch to regular timestamp.</p></li>
@@ -1026,8 +1026,8 @@ SELECT to_unix_timestamp(&#39;20190430 18:18:51&#39;, &#39;yyyyMMdd HH:mm:ss&#39
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="04_string_manipulation_functions.html" title="previous page"><span class="section-number">5.3. </span>String Manipulation Functions</a>
-    <a class='right-next' id="next-link" href="06_overview_of_numeric_functions.html" title="next page"><span class="section-number">5.5. </span>Overview of Numeric Functions</a>
+    <a class='left-prev' id="prev-link" href="04_string_manipulation_functions.html" title="previous page">String Manipulation Functions</a>
+    <a class='right-next' id="next-link" href="06_overview_of_numeric_functions.html" title="next page">Overview of Numeric Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

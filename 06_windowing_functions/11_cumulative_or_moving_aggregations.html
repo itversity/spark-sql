@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6.10. Cumulative or Moving Aggregations &#8212; Apache Spark using SQL</title>
+    <title>Cumulative or Moving Aggregations &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6.11. Exercises - Windowing Functions" href="12_exercises_windowing_functions.html" />
-    <link rel="prev" title="6.9. Filtering - Window Function Results" href="10_filtering_window_function_results.html" />
+    <link rel="next" title="Exercises - Windowing Functions" href="12_exercises_windowing_functions.html" />
+    <link rel="prev" title="Filtering - Window Function Results" href="10_filtering_window_function_results.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,87 +97,87 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
-   1. Getting Started
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../02_basic_transformations/01_basic_transformations.html">
-   2. Basic Transformations
+   Basic Transformations
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
-   3. Basic DDL and DML
+   Basic DDL and DML
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
-   4. DML and Partitioning
+   DML and Partitioning
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Predefined Functions
+   Predefined Functions
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="reference internal" href="01_windowing_functions.html">
-   6. Windowing Functions
+   Windowing Functions
   </a>
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="02_prepare_database.html">
-     6.1. Prepare HR Database
+     Prepare HR Database
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="03_overview_of_windowing_functions.html">
-     6.2. Overview of Windowing Functions
+     Overview of Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
-     6.3. Aggregations using Windowing Functions
+     Aggregations using Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="05_using_lead_or_lag.html">
-     6.4. Using LEAD or LAG
+     Using LEAD or LAG
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="06_getting_first_and_last_values.html">
-     6.5. Getting first and last values
+     Getting first and last values
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="07_ranking_using_windowing_functions.html">
-     6.6. Ranking using Windowing Functions
+     Ranking using Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="08_order_of_execution_of_sql.html">
-     6.7. Order of execution of SQL
+     Order of execution of SQL
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="09_overview_of_sub_queries.html">
-     6.8. Overview of Sub Queries
+     Overview of Sub Queries
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="10_filtering_window_function_results.html">
-     6.9. Filtering - Window Function Results
+     Filtering - Window Function Results
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     6.10. Cumulative or Moving Aggregations
+     Cumulative or Moving Aggregations
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.11. Exercises - Windowing Functions
+     Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -292,7 +292,7 @@
               <div>
                 
   <div class="section" id="cumulative-or-moving-aggregations">
-<h1><span class="section-number">6.10. </span>Cumulative or Moving Aggregations<a class="headerlink" href="#cumulative-or-moving-aggregations" title="Permalink to this headline">¶</a></h1>
+<h1>Cumulative or Moving Aggregations<a class="headerlink" href="#cumulative-or-moving-aggregations" title="Permalink to this headline">¶</a></h1>
 <p>Let us understand how we can take care of cumulative or moving aggregations using Spark SQL.</p>
 <ul class="simple">
 <li><p>When it comes to Windowing or Analytic Functions we can also specify window using <code class="docutils literal notranslate"><span class="pre">ROWS</span> <span class="pre">BETWEEN</span></code> clause.</p></li>
@@ -523,8 +523,8 @@ ORDER BY date_format(order_date, &#39;yyyy-MM&#39;),
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="10_filtering_window_function_results.html" title="previous page"><span class="section-number">6.9. </span>Filtering - Window Function Results</a>
-    <a class='right-next' id="next-link" href="12_exercises_windowing_functions.html" title="next page"><span class="section-number">6.11. </span>Exercises - Windowing Functions</a>
+    <a class='left-prev' id="prev-link" href="10_filtering_window_function_results.html" title="previous page">Filtering - Window Function Results</a>
+    <a class='right-next' id="next-link" href="12_exercises_windowing_functions.html" title="next page">Exercises - Windowing Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

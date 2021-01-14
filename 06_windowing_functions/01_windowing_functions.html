@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>6. Windowing Functions &#8212; Apache Spark using SQL</title>
+    <title>Windowing Functions &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6.1. Prepare HR Database" href="02_prepare_database.html" />
-    <link rel="prev" title="5.10. Exercises - Pre-Defined Functions" href="../05_predefined_functions/11_exercises_pre_defined_functions.html" />
+    <link rel="next" title="Prepare HR Database" href="02_prepare_database.html" />
+    <link rel="prev" title="Exercises - Pre-Defined Functions" href="../05_predefined_functions/11_exercises_pre_defined_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,87 +97,87 @@
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
-   1. Getting Started
+   Getting Started
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../02_basic_transformations/01_basic_transformations.html">
-   2. Basic Transformations
+   Basic Transformations
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../03_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
-   3. Basic DDL and DML
+   Basic DDL and DML
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../04_dml_and_partitioning/01_dml_and_partitioning.html">
-   4. DML and Partitioning
+   DML and Partitioning
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../05_predefined_functions/01_predefined_functions.html">
-   5. Predefined Functions
+   Predefined Functions
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   6. Windowing Functions
+   Windowing Functions
   </a>
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="02_prepare_database.html">
-     6.1. Prepare HR Database
+     Prepare HR Database
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="03_overview_of_windowing_functions.html">
-     6.2. Overview of Windowing Functions
+     Overview of Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
-     6.3. Aggregations using Windowing Functions
+     Aggregations using Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="05_using_lead_or_lag.html">
-     6.4. Using LEAD or LAG
+     Using LEAD or LAG
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="06_getting_first_and_last_values.html">
-     6.5. Getting first and last values
+     Getting first and last values
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="07_ranking_using_windowing_functions.html">
-     6.6. Ranking using Windowing Functions
+     Ranking using Windowing Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="08_order_of_execution_of_sql.html">
-     6.7. Order of execution of SQL
+     Order of execution of SQL
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="09_overview_of_sub_queries.html">
-     6.8. Overview of Sub Queries
+     Overview of Sub Queries
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="10_filtering_window_function_results.html">
-     6.9. Filtering - Window Function Results
+     Filtering - Window Function Results
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
-     6.10. Cumulative or Moving Aggregations
+     Cumulative or Moving Aggregations
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.11. Exercises - Windowing Functions
+     Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -292,11 +292,9 @@
               <div>
                 
   <div class="section" id="windowing-functions">
-<h1><span class="section-number">6. </span>Windowing Functions<a class="headerlink" href="#windowing-functions" title="Permalink to this headline">¶</a></h1>
+<h1>Windowing Functions<a class="headerlink" href="#windowing-functions" title="Permalink to this headline">¶</a></h1>
 <p>As part of this section we will primarily talk about Windowing Functions. These are also known as Analytic Functions in Databases like Oracle.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/wkYC9crqHH8?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
 <ul class="simple">
 <li><p>Prepare HR Database</p></li>
@@ -325,33 +323,12 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>username = itversity
-spark = org.apache.spark.sql.SparkSession@553edabc
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>org.apache.spark.sql.SparkSession@553edabc
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
 <span class="nc">SET</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">shuffle</span><span class="o">.</span><span class="n">partitions</span><span class="k">=</span><span class="mi">2</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Waiting for a Spark session to start...
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------------------+-----+
-|                 key|value|
-+--------------------+-----+
-|spark.sql.shuffle...|    2|
-+--------------------+-----+
 </pre></div>
 </div>
 </div>
@@ -388,8 +365,8 @@ spark = org.apache.spark.sql.SparkSession@553edabc
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../05_predefined_functions/11_exercises_pre_defined_functions.html" title="previous page"><span class="section-number">5.10. </span>Exercises - Pre-Defined Functions</a>
-    <a class='right-next' id="next-link" href="02_prepare_database.html" title="next page"><span class="section-number">6.1. </span>Prepare HR Database</a>
+    <a class='left-prev' id="prev-link" href="../05_predefined_functions/11_exercises_pre_defined_functions.html" title="previous page">Exercises - Pre-Defined Functions</a>
+    <a class='right-next' id="next-link" href="02_prepare_database.html" title="next page">Prepare HR Database</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
