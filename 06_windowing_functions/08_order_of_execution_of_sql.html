@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Order of execution of SQL &#8212; Apache Spark using SQL</title>
+    <title>6.7. Order of execution of SQL &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.8. Overview of Sub Queries" href="09_overview_of_sub_queries.html" />
+    <link rel="prev" title="6.6. Ranking using Windowing Functions" href="07_ranking_using_windowing_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    1. Getting Started
@@ -118,10 +120,67 @@
    5. Predefined Functions
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active">
   <a class="reference internal" href="01_windowing_functions.html">
    6. Windowing Functions
   </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_prepare_database.html">
+     6.1. Prepare HR Database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_overview_of_windowing_functions.html">
+     6.2. Overview of Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
+     6.3. Aggregations using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_windowing_functions.html">
+     6.11. Exercises - Windowing Functions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -233,7 +292,7 @@
               <div>
                 
   <div class="section" id="order-of-execution-of-sql">
-<h1>Order of execution of SQL<a class="headerlink" href="#order-of-execution-of-sql" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">6.7. </span>Order of execution of SQL<a class="headerlink" href="#order-of-execution-of-sql" title="Permalink to this headline">¶</a></h1>
 <p>Let us review the order of execution of SQL. First let us review the order of writing the query.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -242,24 +301,24 @@
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -297,16 +356,16 @@ val spark = SparkSession.
 <p>Let us come up with a query which will compute daily revenue using COMPLETE or CLOSED orders and also sorted by order_date.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT o.order_date,
   round(sum(oi.order_item_subtotal), 2) AS revenue
@@ -322,7 +381,7 @@ LIMIT 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT o.order_date,
     round(sum(oi.order_item_subtotal), 2) AS revenue
@@ -353,7 +412,7 @@ LIMIT 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT o.order_date,
     round(sum(oi.order_item_subtotal), 2) AS revenue
@@ -374,7 +433,7 @@ LIMIT 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT o.order_date,
     round(sum(oi.order_item_subtotal), 2) AS revenue
@@ -420,6 +479,8 @@ LIMIT 10
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="07_ranking_using_windowing_functions.html" title="previous page"><span class="section-number">6.6. </span>Ranking using Windowing Functions</a>
+    <a class='right-next' id="next-link" href="09_overview_of_sub_queries.html" title="next page"><span class="section-number">6.8. </span>Overview of Sub Queries</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

@@ -141,8 +141,43 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.4. Exercises - Windowing Functions
+     6.11. Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -290,12 +325,33 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>username = itversity
+spark = org.apache.spark.sql.SparkSession@553edabc
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>org.apache.spark.sql.SparkSession@553edabc
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
 <span class="nc">SET</span> <span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">shuffle</span><span class="o">.</span><span class="n">partitions</span><span class="k">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Waiting for a Spark session to start...
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------------------+-----+
+|                 key|value|
++--------------------+-----+
+|spark.sql.shuffle...|    2|
++--------------------+-----+
 </pre></div>
 </div>
 </div>

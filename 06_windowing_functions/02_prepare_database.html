@@ -141,8 +141,43 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.4. Exercises - Windowing Functions
+     6.11. Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -260,30 +295,28 @@
 <h1><span class="section-number">6.1. </span>Prepare HR Database<a class="headerlink" href="#prepare-hr-database" title="Permalink to this headline">¶</a></h1>
 <p>Let us prepare HR database with <strong>EMPLOYEES</strong> Table. We will be using this for some of the examples as well as exercises related to Window Functions.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/ooxBTw_UU3U?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -318,36 +351,36 @@ val spark = SparkSession.
 <p>First let us start with creating the database.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-DROP DATABASE itversity_hr CASCADE
+<span class="nc">DROP</span> <span class="nc">DATABASE</span> <span class="n">itversity_hr</span> <span class="nc">CASCADE</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-CREATE DATABASE itversity_hr
+<span class="nc">CREATE</span> <span class="nc">DATABASE</span> <span class="n">itversity_hr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_hr
+<span class="nc">USE</span> <span class="n">itversity_hr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT current_database()
+<span class="nc">SELECT</span> <span class="n">current_database</span><span class="o">()</span>
 </pre></div>
 </div>
 </div>
@@ -355,21 +388,21 @@ SELECT current_database()
 <p>As the database is created, let us go ahead and add table to it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-CREATE TABLE employees (
-  employee_id     int,
-  first_name      varchar(20),
-  last_name       varchar(25),
-  email           varchar(25),
-  phone_number    varchar(20),
-  hire_date       date,
-  job_id          varchar(10),
-  salary          decimal(8,2),
-  commission_pct  decimal(2,2),
-  manager_id      int,
-  department_id   int
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY &#39;\t&#39;
+<span class="nc">CREATE</span> <span class="nc">TABLE</span> <span class="n">employees</span> <span class="o">(</span>
+  <span class="n">employee_id</span>     <span class="n">int</span><span class="o">,</span>
+  <span class="n">first_name</span>      <span class="n">varchar</span><span class="o">(</span><span class="mi">20</span><span class="o">),</span>
+  <span class="n">last_name</span>       <span class="n">varchar</span><span class="o">(</span><span class="mi">25</span><span class="o">),</span>
+  <span class="n">email</span>           <span class="n">varchar</span><span class="o">(</span><span class="mi">25</span><span class="o">),</span>
+  <span class="n">phone_number</span>    <span class="n">varchar</span><span class="o">(</span><span class="mi">20</span><span class="o">),</span>
+  <span class="n">hire_date</span>       <span class="n">date</span><span class="o">,</span>
+  <span class="n">job_id</span>          <span class="n">varchar</span><span class="o">(</span><span class="mi">10</span><span class="o">),</span>
+  <span class="n">salary</span>          <span class="n">decimal</span><span class="o">(</span><span class="mi">8</span><span class="o">,</span><span class="mi">2</span><span class="o">),</span>
+  <span class="n">commission_pct</span>  <span class="n">decimal</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">),</span>
+  <span class="n">manager_id</span>      <span class="n">int</span><span class="o">,</span>
+  <span class="n">department_id</span>   <span class="n">int</span>
+<span class="o">)</span> <span class="nc">ROW</span> <span class="nc">FORMAT</span> <span class="nc">DELIMITED</span> <span class="nc">FIELDS</span> <span class="nc">TERMINATED</span> <span class="nc">BY</span> <span class="sc">&#39;\t&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -377,7 +410,7 @@ CREATE TABLE employees (
 <p>Let us load the data and validate the table.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 LOAD DATA LOCAL INPATH &#39;/data/hr_db/employees&#39; 
 INTO TABLE employees
@@ -387,27 +420,27 @@ INTO TABLE employees
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM employees LIMIT 10
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="n">employees</span> <span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT employee_id, department_id, salary FROM employees LIMIT 10
+<span class="nc">SELECT</span> <span class="n">employee_id</span><span class="o">,</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span> <span class="nc">FROM</span> <span class="n">employees</span> <span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT count(1) FROM employees
+<span class="nc">SELECT</span> <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="nc">FROM</span> <span class="n">employees</span>
 </pre></div>
 </div>
 </div>

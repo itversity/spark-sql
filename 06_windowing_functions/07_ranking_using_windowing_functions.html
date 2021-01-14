@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ranking using Windowing Functions &#8212; Apache Spark using SQL</title>
+    <title>6.6. Ranking using Windowing Functions &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.7. Order of execution of SQL" href="08_order_of_execution_of_sql.html" />
+    <link rel="prev" title="6.5. Getting first and last values" href="06_getting_first_and_last_values.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    1. Getting Started
@@ -118,10 +120,67 @@
    5. Predefined Functions
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active">
   <a class="reference internal" href="01_windowing_functions.html">
    6. Windowing Functions
   </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_prepare_database.html">
+     6.1. Prepare HR Database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_overview_of_windowing_functions.html">
+     6.2. Overview of Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
+     6.3. Aggregations using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_windowing_functions.html">
+     6.11. Exercises - Windowing Functions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -233,7 +292,7 @@
               <div>
                 
   <div class="section" id="ranking-using-windowing-functions">
-<h1>Ranking using Windowing Functions<a class="headerlink" href="#ranking-using-windowing-functions" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">6.6. </span>Ranking using Windowing Functions<a class="headerlink" href="#ranking-using-windowing-functions" title="Permalink to this headline">¶</a></h1>
 <p>Let us see how we can assign ranks using different <strong>rank</strong> functions.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -242,24 +301,41 @@
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>username = itversity
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>itversity
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>username = itversity
+spark = org.apache.spark.sql.SparkSession@32571fa2
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>org.apache.spark.sql.SparkSession@32571fa2
 </pre></div>
 </div>
 </div>
@@ -295,25 +371,44 @@ val spark = SparkSession.
 <p>Here is an example to assign sparse ranks using the table daily_product_revenue with in each day based on revenue. We can use <code class="docutils literal notranslate"><span class="pre">rank</span></code> function to assign sparse ranks.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Waiting for a Spark session to start...
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>++
+||
+++
+++
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT t.*,
-  rank() OVER (
-    PARTITION BY order_date
-    ORDER BY revenue DESC
-  ) AS rnk
-FROM daily_product_revenue t
-ORDER BY order_date, revenue DESC
-LIMIT 100
+<span class="nc">SELECT</span> <span class="n">t</span><span class="o">.*,</span>
+  <span class="n">rank</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span>
+    <span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">order_date</span>
+    <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">revenue</span> <span class="nc">DESC</span>
+  <span class="o">)</span> <span class="nc">AS</span> <span class="n">rnk</span>
+<span class="nc">FROM</span> <span class="n">daily_product_revenue</span> <span class="n">t</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">order_date</span><span class="o">,</span> <span class="n">revenue</span> <span class="nc">DESC</span>
+<span class="nc">LIMIT</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Magic sql failed to execute with error: 
+execute, tree:
+Exchange hashpartitioning(order_date#5, 200)
++- HiveTableScan [order_date#5, order_item_product_id#6, revenue#7], HiveTableRelation `itversity_retail`.`daily_product_revenue`, org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, [order_date#5, order_item_product_id#6, revenue#7]
 </pre></div>
 </div>
 </div>
@@ -324,71 +419,79 @@ LIMIT 100
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_hr
+<span class="nc">USE</span> <span class="n">itversity_hr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>++
+||
+++
+++
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT
-  employee_id,
-  department_id,
-  salary,
-  rank() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC
-  ) rnk,
-  dense_rank() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC
-  ) drnk,
-  row_number() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC
-  ) rn
-FROM employees
-ORDER BY department_id, salary DESC
+<span class="nc">SELECT</span>
+  <span class="n">employee_id</span><span class="o">,</span>
+  <span class="n">department_id</span><span class="o">,</span>
+  <span class="n">salary</span><span class="o">,</span>
+  <span class="n">rank</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span>
+    <span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span>
+    <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span>
+  <span class="o">)</span> <span class="n">rnk</span><span class="o">,</span>
+  <span class="n">dense_rank</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span>
+    <span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span>
+    <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span>
+  <span class="o">)</span> <span class="n">drnk</span><span class="o">,</span>
+  <span class="n">row_number</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span>
+    <span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span>
+    <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span>
+  <span class="o">)</span> <span class="n">rn</span>
+<span class="nc">FROM</span> <span class="n">employees</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span> <span class="nc">DESC</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
-SELECT
-  employee_id,
-  department_id,
-  salary,
-  rank() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC
-  ) rnk,
-  dense_rank() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC
-  ) drnk,
-  row_number() OVER (
-    PARTITION BY department_id
-    ORDER BY salary DESC, employee_id
-  ) rn
-FROM employees
-ORDER BY department_id, salary DESC
-&quot;&quot;&quot;).
-    show(100, false)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT</span>
+<span class="s">  employee_id,</span>
+<span class="s">  department_id,</span>
+<span class="s">  salary,</span>
+<span class="s">  rank() OVER (</span>
+<span class="s">    PARTITION BY department_id</span>
+<span class="s">    ORDER BY salary DESC</span>
+<span class="s">  ) rnk,</span>
+<span class="s">  dense_rank() OVER (</span>
+<span class="s">    PARTITION BY department_id</span>
+<span class="s">    ORDER BY salary DESC</span>
+<span class="s">  ) drnk,</span>
+<span class="s">  row_number() OVER (</span>
+<span class="s">    PARTITION BY department_id</span>
+<span class="s">    ORDER BY salary DESC, employee_id</span>
+<span class="s">  ) rn</span>
+<span class="s">FROM employees</span>
+<span class="s">ORDER BY department_id, salary DESC</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span>
+    <span class="n">show</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM employees ORDER BY salary LIMIT 10
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="n">employees</span> <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -399,11 +502,11 @@ SELECT * FROM employees ORDER BY salary LIMIT 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT employee_id, salary,
-    dense_rank() OVER (ORDER BY salary DESC) AS drnk
-FROM employees
+<span class="nc">SELECT</span> <span class="n">employee_id</span><span class="o">,</span> <span class="n">salary</span><span class="o">,</span>
+    <span class="n">dense_rank</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">drnk</span>
+<span class="nc">FROM</span> <span class="n">employees</span>
 </pre></div>
 </div>
 </div>
@@ -444,6 +547,8 @@ FROM employees
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="06_getting_first_and_last_values.html" title="previous page"><span class="section-number">6.5. </span>Getting first and last values</a>
+    <a class='right-next' id="next-link" href="08_order_of_execution_of_sql.html" title="next page"><span class="section-number">6.7. </span>Order of execution of SQL</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

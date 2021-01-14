@@ -141,8 +141,43 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.4. Exercises - Windowing Functions
+     6.11. Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -260,30 +295,28 @@
 <h1><span class="section-number">6.2. </span>Overview of Windowing Functions<a class="headerlink" href="#overview-of-windowing-functions" title="Permalink to this headline">¶</a></h1>
 <p>Let us get an overview of Analytics or Windowing Functions in Spark SQL.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/psc34WIg3ew?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -320,33 +353,33 @@ val spark = SparkSession.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_hr
+<span class="nc">USE</span> <span class="n">itversity_hr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT employee_id, department_id, salary FROM employees LIMIT 10
+<span class="nc">SELECT</span> <span class="n">employee_id</span><span class="o">,</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span> <span class="nc">FROM</span> <span class="n">employees</span> <span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT employee_id, department_id, salary,
-    count(1) OVER (PARTITION BY department_id) AS employee_count,
-    rank() OVER (ORDER BY salary DESC) AS rnk,
-    lead(employee_id) OVER (PARTITION BY department_id ORDER BY salary DESC) AS lead_emp_id,
-    lead(salary) OVER (PARTITION BY department_id ORDER BY salary DESC) AS lead_emp_sal
-FROM employees
-ORDER BY employee_id
+<span class="nc">SELECT</span> <span class="n">employee_id</span><span class="o">,</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span><span class="o">,</span>
+    <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">employee_count</span><span class="o">,</span>
+    <span class="n">rank</span><span class="o">()</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">rnk</span><span class="o">,</span>
+    <span class="n">lead</span><span class="o">(</span><span class="n">employee_id</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span> <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">lead_emp_id</span><span class="o">,</span>
+    <span class="n">lead</span><span class="o">(</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">department_id</span> <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">salary</span> <span class="nc">DESC</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">lead_emp_sal</span>
+<span class="nc">FROM</span> <span class="n">employees</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">employee_id</span>
 </pre></div>
 </div>
 </div>

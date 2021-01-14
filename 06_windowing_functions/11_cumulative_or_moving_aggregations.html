@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cumulative or Moving Aggregations &#8212; Apache Spark using SQL</title>
+    <title>6.10. Cumulative or Moving Aggregations &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.11. Exercises - Windowing Functions" href="12_exercises_windowing_functions.html" />
+    <link rel="prev" title="6.9. Filtering - Window Function Results" href="10_filtering_window_function_results.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    1. Getting Started
@@ -118,10 +120,67 @@
    5. Predefined Functions
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active">
   <a class="reference internal" href="01_windowing_functions.html">
    6. Windowing Functions
   </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_prepare_database.html">
+     6.1. Prepare HR Database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_overview_of_windowing_functions.html">
+     6.2. Overview of Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
+     6.3. Aggregations using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_windowing_functions.html">
+     6.11. Exercises - Windowing Functions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -233,7 +292,7 @@
               <div>
                 
   <div class="section" id="cumulative-or-moving-aggregations">
-<h1>Cumulative or Moving Aggregations<a class="headerlink" href="#cumulative-or-moving-aggregations" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">6.10. </span>Cumulative or Moving Aggregations<a class="headerlink" href="#cumulative-or-moving-aggregations" title="Permalink to this headline">¶</a></h1>
 <p>Let us understand how we can take care of cumulative or moving aggregations using Spark SQL.</p>
 <ul class="simple">
 <li><p>When it comes to Windowing or Analytic Functions we can also specify window using <code class="docutils literal notranslate"><span class="pre">ROWS</span> <span class="pre">BETWEEN</span></code> clause.</p></li>
@@ -243,24 +302,24 @@
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -289,41 +348,41 @@ val spark = SparkSession.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_hr
+<span class="nc">USE</span> <span class="n">itversity_hr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT e.employee_id, e.department_id, e.salary,
-    sum(e.salary) OVER (
-        PARTITION BY e.department_id
-        ORDER BY e.salary DESC
-        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-    ) AS sum_sal_expense
-FROM employees e
-ORDER BY e.department_id, e.salary DESC
+<span class="nc">SELECT</span> <span class="n">e</span><span class="o">.</span><span class="n">employee_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">,</span>
+    <span class="n">sum</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span>
+        <span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span>
+        <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span> <span class="nc">DESC</span>
+        <span class="nc">ROWS</span> <span class="nc">BETWEEN</span> <span class="nc">UNBOUNDED</span> <span class="nc">PRECEDING</span> <span class="nc">AND</span> <span class="nc">CURRENT</span> <span class="nc">ROW</span>
+    <span class="o">)</span> <span class="nc">AS</span> <span class="n">sum_sal_expense</span>
+<span class="nc">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span> <span class="nc">DESC</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT t.*,
     round(sum(t.revenue) OVER (
@@ -340,18 +399,18 @@ ORDER BY date_format(order_date, &#39;yyyy-MM&#39;),
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
-SELECT t.*,
-    round(sum(t.revenue) OVER (
-        PARTITION BY date_format(order_date, &#39;yyyy-MM&#39;)
-        ORDER BY order_date
-        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
-    ), 2) AS cumulative_daily_revenue
-FROM daily_revenue t
-ORDER BY date_format(order_date, &#39;yyyy-MM&#39;), 
-    order_date
-&quot;&quot;&quot;).
-    show(100, false)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT t.*,</span>
+<span class="s">    round(sum(t.revenue) OVER (</span>
+<span class="s">        PARTITION BY date_format(order_date, &#39;yyyy-MM&#39;)</span>
+<span class="s">        ORDER BY order_date</span>
+<span class="s">        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
+<span class="s">    ), 2) AS cumulative_daily_revenue</span>
+<span class="s">FROM daily_revenue t</span>
+<span class="s">ORDER BY date_format(order_date, &#39;yyyy-MM&#39;), </span>
+<span class="s">    order_date</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span>
+    <span class="n">show</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -361,47 +420,47 @@ ORDER BY date_format(order_date, &#39;yyyy-MM&#39;),
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT t.*,
-    round(sum(t.revenue) OVER (
-        ORDER BY order_date
-        ROWS BETWEEN 3 PRECEDING AND CURRENT ROW
-    ), 2) AS moving_3day_revenue
-FROM daily_revenue t
-ORDER BY order_date
+<span class="nc">SELECT</span> <span class="n">t</span><span class="o">.*,</span>
+    <span class="n">round</span><span class="o">(</span><span class="n">sum</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="n">revenue</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span>
+        <span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">order_date</span>
+        <span class="nc">ROWS</span> <span class="nc">BETWEEN</span> <span class="mi">3</span> <span class="nc">PRECEDING</span> <span class="nc">AND</span> <span class="nc">CURRENT</span> <span class="nc">ROW</span>
+    <span class="o">),</span> <span class="mi">2</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">moving_3day_revenue</span>
+<span class="nc">FROM</span> <span class="n">daily_revenue</span> <span class="n">t</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">order_date</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
-    SELECT t.*,
-        round(sum(t.revenue) OVER (
-            ORDER BY order_date
-            ROWS BETWEEN 3 PRECEDING AND CURRENT ROW
-        ), 2) AS moving_3day_revenue
-    FROM daily_revenue t
-    ORDER BY order_date
-&quot;&quot;&quot;).
-    show(30, false)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">    SELECT t.*,</span>
+<span class="s">        round(sum(t.revenue) OVER (</span>
+<span class="s">            ORDER BY order_date</span>
+<span class="s">            ROWS BETWEEN 3 PRECEDING AND CURRENT ROW</span>
+<span class="s">        ), 2) AS moving_3day_revenue</span>
+<span class="s">    FROM daily_revenue t</span>
+<span class="s">    ORDER BY order_date</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span>
+    <span class="n">show</span><span class="o">(</span><span class="mi">30</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 SELECT t.*,
     round(sum(t.revenue) OVER (
@@ -418,18 +477,18 @@ ORDER BY date_format(order_date, &#39;yyyy-MM&#39;),
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>spark.sql(&quot;&quot;&quot;
-SELECT t.*,
-    round(sum(t.revenue) OVER (
-        PARTITION BY date_format(order_date, &#39;yyyy-MM&#39;)
-        ORDER BY order_date
-        ROWS BETWEEN 3 PRECEDING AND CURRENT ROW
-    ), 2) AS moving_3day_revenue
-FROM daily_revenue t
-ORDER BY date_format(order_date, &#39;yyyy-MM&#39;), 
-    order_date
-&quot;&quot;&quot;).
-    show(100, false)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="o">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">SELECT t.*,</span>
+<span class="s">    round(sum(t.revenue) OVER (</span>
+<span class="s">        PARTITION BY date_format(order_date, &#39;yyyy-MM&#39;)</span>
+<span class="s">        ORDER BY order_date</span>
+<span class="s">        ROWS BETWEEN 3 PRECEDING AND CURRENT ROW</span>
+<span class="s">    ), 2) AS moving_3day_revenue</span>
+<span class="s">FROM daily_revenue t</span>
+<span class="s">ORDER BY date_format(order_date, &#39;yyyy-MM&#39;), </span>
+<span class="s">    order_date</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">).</span>
+    <span class="n">show</span><span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="kc">false</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
@@ -464,6 +523,8 @@ ORDER BY date_format(order_date, &#39;yyyy-MM&#39;),
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="10_filtering_window_function_results.html" title="previous page"><span class="section-number">6.9. </span>Filtering - Window Function Results</a>
+    <a class='right-next' id="next-link" href="12_exercises_windowing_functions.html" title="next page"><span class="section-number">6.11. </span>Exercises - Windowing Functions</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

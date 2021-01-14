@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview of Sub Queries &#8212; Apache Spark using SQL</title>
+    <title>6.8. Overview of Sub Queries &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.9. Filtering - Window Function Results" href="10_filtering_window_function_results.html" />
+    <link rel="prev" title="6.7. Order of execution of SQL" href="08_order_of_execution_of_sql.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,7 +94,7 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    1. Getting Started
@@ -118,10 +120,67 @@
    5. Predefined Functions
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active">
   <a class="reference internal" href="01_windowing_functions.html">
    6. Windowing Functions
   </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_prepare_database.html">
+     6.1. Prepare HR Database
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_overview_of_windowing_functions.html">
+     6.2. Overview of Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_aggregations_using_windowing_functions.html">
+     6.3. Aggregations using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_windowing_functions.html">
+     6.11. Exercises - Windowing Functions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -233,7 +292,7 @@
               <div>
                 
   <div class="section" id="overview-of-sub-queries">
-<h1>Overview of Sub Queries<a class="headerlink" href="#overview-of-sub-queries" title="Permalink to this headline">¶</a></h1>
+<h1><span class="section-number">6.8. </span>Overview of Sub Queries<a class="headerlink" href="#overview-of-sub-queries" title="Permalink to this headline">¶</a></h1>
 <p>Let us recap about Sub Queries.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -242,24 +301,24 @@
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -293,18 +352,18 @@ val spark = SparkSession.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM (SELECT current_date)
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="o">(</span><span class="nc">SELECT</span> <span class="n">current_date</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM (SELECT current_date) AS q
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="o">(</span><span class="nc">SELECT</span> <span class="n">current_date</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">q</span>
 </pre></div>
 </div>
 </div>
@@ -312,23 +371,23 @@ SELECT * FROM (SELECT current_date) AS q
 <p>Let us see few more examples with respect to Sub Queries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM (
-    SELECT order_date, count(1) AS order_count
-    FROM orders
-    GROUP BY order_date
-) q
-LIMIT 10
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="o">(</span>
+    <span class="nc">SELECT</span> <span class="n">order_date</span><span class="o">,</span> <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">order_count</span>
+    <span class="nc">FROM</span> <span class="n">orders</span>
+    <span class="nc">GROUP</span> <span class="nc">BY</span> <span class="n">order_date</span>
+<span class="o">)</span> <span class="n">q</span>
+<span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -339,26 +398,26 @@ LIMIT 10
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * FROM (
-    SELECT order_date, count(1) AS order_count
-    FROM orders
-    GROUP BY order_date
-) q
-WHERE q.order_count &gt; 10
+<span class="nc">SELECT</span> <span class="o">*</span> <span class="nc">FROM</span> <span class="o">(</span>
+    <span class="nc">SELECT</span> <span class="n">order_date</span><span class="o">,</span> <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">order_count</span>
+    <span class="nc">FROM</span> <span class="n">orders</span>
+    <span class="nc">GROUP</span> <span class="nc">BY</span> <span class="n">order_date</span>
+<span class="o">)</span> <span class="n">q</span>
+<span class="nc">WHERE</span> <span class="n">q</span><span class="o">.</span><span class="n">order_count</span> <span class="o">&gt;</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT order_date, count(1) AS order_count
-FROM orders
-GROUP BY order_date
-    HAVING count(1) &gt; 10
+<span class="nc">SELECT</span> <span class="n">order_date</span><span class="o">,</span> <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">order_count</span>
+<span class="nc">FROM</span> <span class="n">orders</span>
+<span class="nc">GROUP</span> <span class="nc">BY</span> <span class="n">order_date</span>
+    <span class="nc">HAVING</span> <span class="n">count</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -393,6 +452,8 @@ GROUP BY order_date
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="08_order_of_execution_of_sql.html" title="previous page"><span class="section-number">6.7. </span>Order of execution of SQL</a>
+    <a class='right-next' id="next-link" href="10_filtering_window_function_results.html" title="next page"><span class="section-number">6.9. </span>Filtering - Window Function Results</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

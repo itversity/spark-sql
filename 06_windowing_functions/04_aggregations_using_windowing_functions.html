@@ -55,7 +55,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="6.4. Exercises - Windowing Functions" href="12_exercises_windowing_functions.html" />
+    <link rel="next" title="6.4. Using LEAD or LAG" href="05_using_lead_or_lag.html" />
     <link rel="prev" title="6.2. Overview of Windowing Functions" href="03_overview_of_windowing_functions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -141,8 +141,43 @@
     </a>
    </li>
    <li class="toctree-l2">
+    <a class="reference internal" href="05_using_lead_or_lag.html">
+     6.4. Using LEAD or LAG
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_getting_first_and_last_values.html">
+     6.5. Getting first and last values
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_ranking_using_windowing_functions.html">
+     6.6. Ranking using Windowing Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_order_of_execution_of_sql.html">
+     6.7. Order of execution of SQL
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_overview_of_sub_queries.html">
+     6.8. Overview of Sub Queries
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_filtering_window_function_results.html">
+     6.9. Filtering - Window Function Results
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_cumulative_or_moving_aggregations.html">
+     6.10. Cumulative or Moving Aggregations
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="12_exercises_windowing_functions.html">
-     6.4. Exercises - Windowing Functions
+     6.11. Exercises - Windowing Functions
     </a>
    </li>
   </ul>
@@ -274,30 +309,28 @@
 <h1><span class="section-number">6.3. </span>Aggregations using Windowing Functions<a class="headerlink" href="#aggregations-using-windowing-functions" title="Permalink to this headline">¶</a></h1>
 <p>Let us see how we can perform aggregations with in a partition or group using Windowing/Analytics Functions.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/peDMzBredoU?rel=0&amp;controls=1&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></div></div>
 </div>
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Windowing Functions&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
+<span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
+    <span class="n">builder</span><span class="o">.</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.ui.port&quot;</span><span class="o">,</span> <span class="s">&quot;0&quot;</span><span class="o">).</span>
+    <span class="n">config</span><span class="o">(</span><span class="s">&quot;spark.sql.warehouse.dir&quot;</span><span class="o">,</span> <span class="s">s&quot;/user/</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s">/warehouse&quot;</span><span class="o">).</span>
+    <span class="n">enableHiveSupport</span><span class="o">.</span>
+    <span class="n">appName</span><span class="o">(</span><span class="s">s&quot;</span><span class="si">${</span><span class="n">username</span><span class="si">}</span><span class="s"> | Spark SQL - Windowing Functions&quot;</span><span class="o">).</span>
+    <span class="n">master</span><span class="o">(</span><span class="s">&quot;yarn&quot;</span><span class="o">).</span>
+    <span class="n">getOrCreate</span>
 </pre></div>
 </div>
 </div>
@@ -332,21 +365,21 @@ val spark = SparkSession.
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_hr
+<span class="nc">USE</span> <span class="n">itversity_hr</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT employee_id, department_id, salary 
-FROM employees 
-ORDER BY department_id, salary
-LIMIT 10
+<span class="nc">SELECT</span> <span class="n">employee_id</span><span class="o">,</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span> 
+<span class="nc">FROM</span> <span class="n">employees</span> 
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span>
+<span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -356,33 +389,33 @@ LIMIT 10
 </div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT department_id,
-       sum(salary) AS department_salary_expense
-FROM employees
-GROUP BY department_id
-ORDER BY department_id
+<span class="nc">SELECT</span> <span class="n">department_id</span><span class="o">,</span>
+       <span class="n">sum</span><span class="o">(</span><span class="n">salary</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">department_salary_expense</span>
+<span class="nc">FROM</span> <span class="n">employees</span>
+<span class="nc">GROUP</span> <span class="nc">BY</span> <span class="n">department_id</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">department_id</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT e.employee_id, e.department_id, e.salary,
-       ae.department_salary_expense,
-       ae.avg_salary_expense
-FROM employees e JOIN (
-     SELECT department_id, 
-            sum(salary) AS department_salary_expense,
-            avg(salary) AS avg_salary_expense
-     FROM employees
-     GROUP BY department_id
-) ae
-ON e.department_id = ae.department_id
-ORDER BY department_id, salary
+<span class="nc">SELECT</span> <span class="n">e</span><span class="o">.</span><span class="n">employee_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">,</span>
+       <span class="n">ae</span><span class="o">.</span><span class="n">department_salary_expense</span><span class="o">,</span>
+       <span class="n">ae</span><span class="o">.</span><span class="n">avg_salary_expense</span>
+<span class="nc">FROM</span> <span class="n">employees</span> <span class="n">e</span> <span class="nc">JOIN</span> <span class="o">(</span>
+     <span class="nc">SELECT</span> <span class="n">department_id</span><span class="o">,</span> 
+            <span class="n">sum</span><span class="o">(</span><span class="n">salary</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">department_salary_expense</span><span class="o">,</span>
+            <span class="n">avg</span><span class="o">(</span><span class="n">salary</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">avg_salary_expense</span>
+     <span class="nc">FROM</span> <span class="n">employees</span>
+     <span class="nc">GROUP</span> <span class="nc">BY</span> <span class="n">department_id</span>
+<span class="o">)</span> <span class="n">ae</span>
+<span class="nc">ON</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">ae</span><span class="o">.</span><span class="n">department_id</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">department_id</span><span class="o">,</span> <span class="n">salary</span>
 </pre></div>
 </div>
 </div>
@@ -395,30 +428,30 @@ ORDER BY department_id, salary
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT e.employee_id, e.department_id, e.salary,
-       sum(e.salary) 
-         OVER (PARTITION BY e.department_id)
-         AS department_salary_expense
-FROM employees e
-ORDER BY e.department_id
+<span class="nc">SELECT</span> <span class="n">e</span><span class="o">.</span><span class="n">employee_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">,</span>
+       <span class="n">sum</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> 
+         <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span>
+         <span class="nc">AS</span> <span class="n">department_salary_expense</span>
+<span class="nc">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT e.employee_id, e.department_id, e.salary,
-    sum(e.salary) OVER (PARTITION BY e.department_id) AS sum_sal_expense,
-    avg(e.salary) OVER (PARTITION BY e.department_id) AS avg_sal_expense,
-    min(e.salary) OVER (PARTITION BY e.department_id) AS min_sal_expense,
-    max(e.salary) OVER (PARTITION BY e.department_id) AS max_sal_expense,
-    count(e.salary) OVER (PARTITION BY e.department_id) AS cnt_sal_expense
-FROM employees e
-ORDER BY e.department_id
+<span class="nc">SELECT</span> <span class="n">e</span><span class="o">.</span><span class="n">employee_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">,</span> <span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">,</span>
+    <span class="n">sum</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">sum_sal_expense</span><span class="o">,</span>
+    <span class="n">avg</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">avg_sal_expense</span><span class="o">,</span>
+    <span class="n">min</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">min_sal_expense</span><span class="o">,</span>
+    <span class="n">max</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">max_sal_expense</span><span class="o">,</span>
+    <span class="n">count</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="n">salary</span><span class="o">)</span> <span class="nc">OVER</span> <span class="o">(</span><span class="nc">PARTITION</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span><span class="o">)</span> <span class="nc">AS</span> <span class="n">cnt_sal_expense</span>
+<span class="nc">FROM</span> <span class="n">employees</span> <span class="n">e</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">e</span><span class="o">.</span><span class="n">department_id</span>
 </pre></div>
 </div>
 </div>
@@ -436,25 +469,25 @@ ORDER BY e.department_id
 <p>Let us create table to compute daily revenue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-DROP TABLE IF EXISTS daily_revenue
+<span class="nc">DROP</span> <span class="nc">TABLE</span> <span class="nc">IF</span> <span class="nc">EXISTS</span> <span class="n">daily_revenue</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 CREATE TABLE daily_revenue
 AS
@@ -470,12 +503,12 @@ GROUP BY o.order_date
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * 
-FROM daily_revenue
-ORDER BY order_date
-LIMIT 10
+<span class="nc">SELECT</span> <span class="o">*</span> 
+<span class="nc">FROM</span> <span class="n">daily_revenue</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">order_date</span>
+<span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -483,25 +516,25 @@ LIMIT 10
 <p>Let us create table to compute daily product revenue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-USE itversity_retail
+<span class="nc">USE</span> <span class="n">itversity_retail</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-DROP TABLE IF EXISTS daily_product_revenue
+<span class="nc">DROP</span> <span class="nc">TABLE</span> <span class="nc">IF</span> <span class="nc">EXISTS</span> <span class="n">daily_product_revenue</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span>%%sql
 
 CREATE TABLE daily_product_revenue
 AS
@@ -518,12 +551,12 @@ GROUP BY o.order_date, oi.order_item_product_id
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">sql</span>
 
-SELECT * 
-FROM daily_product_revenue
-ORDER BY order_date, order_item_product_id
-LIMIT 10
+<span class="nc">SELECT</span> <span class="o">*</span> 
+<span class="nc">FROM</span> <span class="n">daily_product_revenue</span>
+<span class="nc">ORDER</span> <span class="nc">BY</span> <span class="n">order_date</span><span class="o">,</span> <span class="n">order_item_product_id</span>
+<span class="nc">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 </div>
 </div>
@@ -560,7 +593,7 @@ LIMIT 10
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="03_overview_of_windowing_functions.html" title="previous page"><span class="section-number">6.2. </span>Overview of Windowing Functions</a>
-    <a class='right-next' id="next-link" href="12_exercises_windowing_functions.html" title="next page"><span class="section-number">6.4. </span>Exercises - Windowing Functions</a>
+    <a class='right-next' id="next-link" href="05_using_lead_or_lag.html" title="next page"><span class="section-number">6.4. </span>Using LEAD or LAG</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
