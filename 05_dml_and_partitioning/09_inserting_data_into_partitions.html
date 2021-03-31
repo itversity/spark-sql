@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using Dynamic Partition Mode" href="10_using_dynamic_partition_mode.html" />
+    <link rel="prev" title="Loading into Partitions" href="08_loading_data_into_partitions.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,10 +94,87 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../03_basic_transformations/01_basic_transformations.html">
+   Basic Transformations
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../04_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
+   Basic DDL and DML
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="01_dml_and_partitioning.html">
+   DML and Partitioning
+  </a>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_introduction_to_partitioning.html">
+     Introduction to Partitioning
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_creating_tables_using_parquet.html">
+     Creating Tables using Parquet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_load_vs_insert.html">
+     LOAD vs. INSERT
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_inserting_data_using_stage_table.html">
+     Inserting Data using Stage Table
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_creating_partitioned_tables.html">
+     Creating Partitioned Tables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_adding_partitions_to_tables.html">
+     Adding Partitions to Tables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_loading_data_into_partitions.html">
+     Loading into Partitions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Inserting Data into Partitions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_using_dynamic_partition_mode.html">
+     Using Dynamic Partition Mode
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_exercises_partitioned_tables.html">
+     Exercise - Partitioned Tables
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../06_predefined_functions/01_predefined_functions.html">
+   Predefined Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../07_windowing_functions/01_windowing_functions.html">
+   Windowing Functions
   </a>
  </li>
 </ul>
@@ -354,6 +433,8 @@ s&quot;hdfs dfs -ls -R /user/${username}/warehouse/${username}_retail.db/orders_
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="08_loading_data_into_partitions.html" title="previous page">Loading into Partitions</a>
+    <a class='right-next' id="next-link" href="10_using_dynamic_partition_mode.html" title="next page">Using Dynamic Partition Mode</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

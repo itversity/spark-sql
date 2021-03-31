@@ -55,6 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Spark SQL – Overview" href="02_spark_sql_overview.html" />
+    <link rel="prev" title="Exercise - Getting Started with Spark SQL" href="../01_getting_started/11_exercise_getting_started.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -92,10 +94,92 @@
   </a>
  </li>
 </ul>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../01_getting_started/01_getting_started.html">
    Getting Started
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Basic Transformations
+  </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_spark_sql_overview.html">
+     Spark SQL – Overview
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_define_problem_statement.html">
+     Define Problem Statement
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_preparing_tables.html">
+     Preparing Tables
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_projecting_data.html">
+     Projecting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_filtering_data.html">
+     Filtering Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_joining_tables_inner.html">
+     Joining Tables - Inner
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_joining_tables_outer.html">
+     Joining Tables - Outer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_aggregating_data.html">
+     Aggregating Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_sorting_data.html">
+     Sorting Data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_conclusion_final_solution.html">
+     Conclusion - Final Solution
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_exercises_basic_sql_queries.html">
+     Exercises - Basic SQL Queries
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../04_basic_ddl_and_dml/01_basic_ddl_and_dml.html">
+   Basic DDL and DML
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../05_dml_and_partitioning/01_dml_and_partitioning.html">
+   DML and Partitioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../06_predefined_functions/01_predefined_functions.html">
+   Predefined Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../07_windowing_functions/01_windowing_functions.html">
+   Windowing Functions
   </a>
  </li>
 </ul>
@@ -225,14 +309,14 @@
 <p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
+<div class="highlight-Scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
+<div class="highlight-Scala notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.sql.SparkSession</span>
 
 <span class="k">val</span> <span class="n">username</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;user.name&quot;</span><span class="o">)</span>
 <span class="k">val</span> <span class="n">spark</span> <span class="o">=</span> <span class="nc">SparkSession</span><span class="o">.</span>
@@ -269,6 +353,8 @@
     --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
 </pre></div>
 </div>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -280,16 +366,16 @@
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "apache_toree_scala"
+            mode: "scala"
         },
         kernelOptions: {
-            kernelName: "apache_toree_scala",
+            kernelName: "scala",
             path: "./03_basic_transformations"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'apache_toree_scala'</script>
+    <script>kernelName = 'scala'</script>
 
               </div>
               
@@ -299,6 +385,8 @@
     
     <div class='prev-next-bottom'>
         
+    <a class='left-prev' id="prev-link" href="../01_getting_started/11_exercise_getting_started.html" title="previous page">Exercise - Getting Started with Spark SQL</a>
+    <a class='right-next' id="next-link" href="02_spark_sql_overview.html" title="next page">Spark SQL – Overview</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
