@@ -1,0 +1,644 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting File Metadata &#8212; Apache Spark using SQL</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Apache Spark using SQL</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../spark-sql.html">
+   Apache Spark using SQL
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_getting_started/01_getting_started.html">
+   Getting Started
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Subscribe to our <a href="http://notifyme.itversity.com">Newsletter</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/02_overview_of_hdfs/10_getting_file_metadata.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/itversity/spark-sql"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F02_overview_of_hdfs/10_getting_file_metadata.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/02_overview_of_hdfs/10_getting_file_metadata.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/02_overview_of_hdfs/10_getting_file_metadata.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="getting-file-metadata">
+<h1>Getting File Metadata<a class="headerlink" href="#getting-file-metadata" title="Permalink to this headline">¶</a></h1>
+<p>Let us see how to get metadata for the  files stored in HDFS using <code class="docutils literal notranslate"><span class="pre">hdfs</span> <span class="pre">fsck</span></code> command.</p>
+<ul class="simple">
+<li><p>We have files copied under HDFS location <code class="docutils literal notranslate"><span class="pre">/user/${USER}/retail_db</span></code>. We also have some sample large files copied under HDFS location <code class="docutils literal notranslate"><span class="pre">/public/randomtextwriter</span></code>. We can use <code class="docutils literal notranslate"><span class="pre">hdfs</span> <span class="pre">fsck</span></code> command.</p></li>
+<li><p>We will first see how to get metadata of these files and then try to interpret it in subsequent topics.</p></li>
+<li><p>HDFS stands for Hadoop Distributed File System. It means files are copied in distributed fashion.</p></li>
+<li><p>Our cluster have master nodes and worker nodes, in this case the files will be physically copied in the worker nodes where data node process is running. We will cover this as part of the HDFS architecture.</p></li>
+<li><p>Here are the details about worker nodes along with corresponding private ips.</p></li>
+</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Private ip</p></th>
+<th class="head"><p>Full DNS</p></th>
+<th class="head"><p>Short DNS</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>172.16.1.102</p></td>
+<td><p>wn01.itversity.com</p></td>
+<td><p>wn01</p></td>
+</tr>
+<tr class="row-odd"><td><p>172.16.1.103</p></td>
+<td><p>wn02.itversity.com</p></td>
+<td><p>wn02</p></td>
+</tr>
+<tr class="row-even"><td><p>172.16.1.104</p></td>
+<td><p>wn03.itversity.com</p></td>
+<td><p>wn03</p></td>
+</tr>
+<tr class="row-odd"><td><p>172.16.1.107</p></td>
+<td><p>wn04.itversity.com</p></td>
+<td><p>wn04</p></td>
+</tr>
+<tr class="row-even"><td><p>172.16.1.108</p></td>
+<td><p>wn05.itversity.com</p></td>
+<td><p>wn05</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck -help
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Usage: hdfs fsck &lt;path&gt; [-list-corruptfileblocks | [-move | -delete | -openforwrite] [-files [-blocks [-locations | -racks]]]] [-includeSnapshots] [-storagepolicies] [-blockId &lt;blk_Id&gt;]
+	&lt;path&gt;	start checking from this path
+	-move	move corrupted files to /lost+found
+	-delete	delete corrupted files
+	-files	print out files being checked
+	-openforwrite	print out files opened for write
+	-includeSnapshots	include snapshot data if the given path indicates a snapshottable directory or there are snapshottable directories under it
+	-list-corruptfileblocks	print out list of missing blocks and files they belong to
+	-blocks	print out block report
+	-locations	print out locations for every block
+	-racks	print out network topology for data-node locations
+	-storagepolicies	print out storage policy summary for the blocks
+	-blockId	print out which file this blockId belongs to, locations (nodes, racks) of this block, and other diagnostics info (under replicated, corrupted or not, etc)
+	-replicaDetails	print out each replica details 
+
+Please Note:
+	1. By default fsck ignores files opened for write, use -openforwrite to report such files. They are usually  tagged CORRUPT or HEALTHY depending on their block allocation status
+	2. Option -includeSnapshots should not be used for comparing stats, should be used only for HEALTH check, as this may contain duplicates if the same file present in both original fs tree and inside snapshots.
+
+Generic options supported are
+-conf &lt;configuration file&gt;     specify an application configuration file
+-D &lt;property=value&gt;            use value for given property
+-fs &lt;local|namenode:port&gt;      specify a namenode
+-jt &lt;local|resourcemanager:port&gt;    specify a ResourceManager
+-files &lt;comma separated list of files&gt;    specify comma separated files to be copied to the map reduce cluster
+-libjars &lt;comma separated list of jars&gt;    specify comma separated jar files to include in the classpath.
+-archives &lt;comma separated list of archives&gt;    specify comma separated archives to be unarchived on the compute machines.
+
+The general command line syntax is
+bin/hadoop command [genericOptions] [commandOptions]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We can get high level overview for a retail_db folder by using <code class="docutils literal notranslate"><span class="pre">hdfs</span> <span class="pre">fsck</span> <span class="pre">retail_db</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck /user/${USER}/retail_db
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FSCK started by itversity (auth:SIMPLE) from /172.16.1.114 for path /user/itversity/retail_db at Thu Jan 21 05:34:39 EST 2021
+......Status: HEALTHY
+ Total size:	9537787 B
+ Total dirs:	7
+ Total files:	6
+ Total symlinks:		0
+ Total blocks (validated):	6 (avg. block size 1589631 B)
+ Minimally replicated blocks:	6 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		5
+ Number of racks:		1
+FSCK ended at Thu Jan 21 05:34:39 EST 2021 in 1 milliseconds
+
+
+The filesystem under path &#39;/user/itversity/retail_db&#39; is HEALTHY
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connecting to namenode via http://172.16.1.101:50070/fsck?ugi=itversity&amp;path=%2Fuser%2Fitversity%2Fretail_db
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We can get details about file names using <code class="docutils literal notranslate"><span class="pre">-files</span></code> option.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck /user/${USER}/retail_db -files
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FSCK started by itversity (auth:SIMPLE) from /172.16.1.114 for path /user/itversity/retail_db at Thu Jan 21 05:35:17 EST 2021
+/user/itversity/retail_db &lt;dir&gt;
+/user/itversity/retail_db/categories &lt;dir&gt;
+/user/itversity/retail_db/categories/part-00000 1029 bytes, 1 block(s):  OK
+/user/itversity/retail_db/customers &lt;dir&gt;
+/user/itversity/retail_db/customers/part-00000 953719 bytes, 1 block(s):  OK
+/user/itversity/retail_db/departments &lt;dir&gt;
+/user/itversity/retail_db/departments/part-00000 60 bytes, 1 block(s):  OK
+/user/itversity/retail_db/order_items &lt;dir&gt;
+/user/itversity/retail_db/order_items/part-00000 5408880 bytes, 1 block(s):  OK
+/user/itversity/retail_db/orders &lt;dir&gt;
+/user/itversity/retail_db/orders/part-00000 2999944 bytes, 1 block(s):  OK
+/user/itversity/retail_db/products &lt;dir&gt;
+/user/itversity/retail_db/products/part-00000 174155 bytes, 1 block(s):  OK
+Status: HEALTHY
+ Total size:	9537787 B
+ Total dirs:	7
+ Total files:	6
+ Total symlinks:		0
+ Total blocks (validated):	6 (avg. block size 1589631 B)
+ Minimally replicated blocks:	6 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		5
+ Number of racks:		1
+FSCK ended at Thu Jan 21 05:35:17 EST 2021 in 1 milliseconds
+
+
+The filesystem under path &#39;/user/itversity/retail_db&#39; is HEALTHY
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connecting to namenode via http://172.16.1.101:50070/fsck?ugi=itversity&amp;files=1&amp;path=%2Fuser%2Fitversity%2Fretail_db
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Files in HDFS will be physically stored in worker nodes as blocks. We can get details of blocks associated with files using <code class="docutils literal notranslate"><span class="pre">-blocks</span></code> option.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck /user/${USER}/retail_db -files -blocks
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FSCK started by itversity (auth:SIMPLE) from /172.16.1.114 for path /user/itversity/retail_db at Thu Jan 21 05:36:09 EST 2021
+/user/itversity/retail_db &lt;dir&gt;
+/user/itversity/retail_db/categories &lt;dir&gt;
+/user/itversity/retail_db/categories/part-00000 1029 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455898_41737435 len=1029 repl=2
+
+/user/itversity/retail_db/customers &lt;dir&gt;
+/user/itversity/retail_db/customers/part-00000 953719 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455899_41737436 len=953719 repl=2
+
+/user/itversity/retail_db/departments &lt;dir&gt;
+/user/itversity/retail_db/departments/part-00000 60 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455900_41737437 len=60 repl=2
+
+/user/itversity/retail_db/order_items &lt;dir&gt;
+/user/itversity/retail_db/order_items/part-00000 5408880 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455901_41737438 len=5408880 repl=2
+
+/user/itversity/retail_db/orders &lt;dir&gt;
+/user/itversity/retail_db/orders/part-00000 2999944 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455902_41737439 len=2999944 repl=2
+
+/user/itversity/retail_db/products &lt;dir&gt;
+/user/itversity/retail_db/products/part-00000 174155 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455903_41737440 len=174155 repl=2
+
+Status: HEALTHY
+ Total size:	9537787 B
+ Total dirs:	7
+ Total files:	6
+ Total symlinks:		0
+ Total blocks (validated):	6 (avg. block size 1589631 B)
+ Minimally replicated blocks:	6 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		5
+ Number of racks:		1
+FSCK ended at Thu Jan 21 05:36:09 EST 2021 in 1 milliseconds
+
+
+The filesystem under path &#39;/user/itversity/retail_db&#39; is HEALTHY
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connecting to namenode via http://172.16.1.101:50070/fsck?ugi=itversity&amp;files=1&amp;blocks=1&amp;path=%2Fuser%2Fitversity%2Fretail_db
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-blocks</span></code> will only provide details about the names of the blocks, we need to use <code class="docutils literal notranslate"><span class="pre">-locations</span></code> as well to get the details about the worker nodes where the blocks are physically stored.</p></li>
+<li><p>A block is nothing but a physical file in HDFS. We will understand more about blocks as part of the subsequent topics.</p></li>
+<li><p>To understand where a block is physically stored you can get the infromation from <strong>DatanodeInfoWithStorage</strong> part of the output. It will contain ip address and we can get the corresponding DNS from the above table.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck /user/${USER}/retail_db -files -blocks -locations
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FSCK started by itversity (auth:SIMPLE) from /172.16.1.114 for path /user/itversity/retail_db at Thu Jan 21 05:38:08 EST 2021
+/user/itversity/retail_db &lt;dir&gt;
+/user/itversity/retail_db/categories &lt;dir&gt;
+/user/itversity/retail_db/categories/part-00000 1029 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455898_41737435 len=1029 repl=2 [DatanodeInfoWithStorage[172.16.1.108:50010,DS-698dde50-a336-4e00-bc8f-a9e1a5cc76f4,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-7fb58858-abe9-4a52-9b75-755d849a897b,DISK]]
+
+/user/itversity/retail_db/customers &lt;dir&gt;
+/user/itversity/retail_db/customers/part-00000 953719 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455899_41737436 len=953719 repl=2 [DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.104:50010,DS-98fec5a6-72a9-4590-99cc-cee3a51f4dd5,DISK]]
+
+/user/itversity/retail_db/departments &lt;dir&gt;
+/user/itversity/retail_db/departments/part-00000 60 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455900_41737437 len=60 repl=2 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.107:50010,DS-a12c4ae3-3f6a-42fc-83ff-7779a9fc0482,DISK]]
+
+/user/itversity/retail_db/order_items &lt;dir&gt;
+/user/itversity/retail_db/order_items/part-00000 5408880 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455901_41737438 len=5408880 repl=2 [DatanodeInfoWithStorage[172.16.1.107:50010,DS-6679d10e-378c-4897-8c0e-250aa1af790a,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-1f4edfab-2926-45f9-a37c-ae9d1f542680,DISK]]
+
+/user/itversity/retail_db/orders &lt;dir&gt;
+/user/itversity/retail_db/orders/part-00000 2999944 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455902_41737439 len=2999944 repl=2 [DatanodeInfoWithStorage[172.16.1.102:50010,DS-1edb1d35-81bf-471b-be04-11d973e2a832,DISK], DatanodeInfoWithStorage[172.16.1.108:50010,DS-736614f7-27de-46b8-987f-d669be6a32a3,DISK]]
+
+/user/itversity/retail_db/products &lt;dir&gt;
+/user/itversity/retail_db/products/part-00000 174155 bytes, 1 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1115455903_41737440 len=174155 repl=2 [DatanodeInfoWithStorage[172.16.1.108:50010,DS-698dde50-a336-4e00-bc8f-a9e1a5cc76f4,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-7fb58858-abe9-4a52-9b75-755d849a897b,DISK]]
+
+Status: HEALTHY
+ Total size:	9537787 B
+ Total dirs:	7
+ Total files:	6
+ Total symlinks:		0
+ Total blocks (validated):	6 (avg. block size 1589631 B)
+ Minimally replicated blocks:	6 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	2.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		5
+ Number of racks:		1
+FSCK ended at Thu Jan 21 05:38:08 EST 2021 in 1 milliseconds
+
+
+The filesystem under path &#39;/user/itversity/retail_db&#39; is HEALTHY
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connecting to namenode via http://172.16.1.101:50070/fsck?ugi=itversity&amp;files=1&amp;blocks=1&amp;locations=1&amp;path=%2Fuser%2Fitversity%2Fretail_db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -ls -h /public/randomtextwriter/part-m-00000
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r--   3 hdfs hdfs      1.0 G 2017-01-18 20:24 /public/randomtextwriter/part-m-00000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs fsck /public/randomtextwriter/part-m-00000 -files -blocks -locations
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FSCK started by itversity (auth:SIMPLE) from /172.16.1.114 for path /public/randomtextwriter/part-m-00000 at Thu Jan 21 05:39:53 EST 2021
+/public/randomtextwriter/part-m-00000 1102230331 bytes, 9 block(s):  OK
+0. BP-292116404-172.16.1.101-1479167821718:blk_1074171511_431441 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-1f4edfab-2926-45f9-a37c-ae9d1f542680,DISK]]
+1. BP-292116404-172.16.1.101-1479167821718:blk_1074171524_431454 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-1edb1d35-81bf-471b-be04-11d973e2a832,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-1f4edfab-2926-45f9-a37c-ae9d1f542680,DISK]]
+2. BP-292116404-172.16.1.101-1479167821718:blk_1074171559_431489 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-1f4edfab-2926-45f9-a37c-ae9d1f542680,DISK]]
+3. BP-292116404-172.16.1.101-1479167821718:blk_1074171609_431539 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-7fb58858-abe9-4a52-9b75-755d849a897b,DISK]]
+4. BP-292116404-172.16.1.101-1479167821718:blk_1074171657_431587 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.107:50010,DS-a12c4ae3-3f6a-42fc-83ff-7779a9fc0482,DISK]]
+5. BP-292116404-172.16.1.101-1479167821718:blk_1074171691_431621 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.103:50010,DS-7fb58858-abe9-4a52-9b75-755d849a897b,DISK]]
+6. BP-292116404-172.16.1.101-1479167821718:blk_1074171721_431651 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.102:50010,DS-b0f1636e-fd08-4ddb-bba9-9df8868dfb5d,DISK], DatanodeInfoWithStorage[172.16.1.107:50010,DS-6679d10e-378c-4897-8c0e-250aa1af790a,DISK], DatanodeInfoWithStorage[172.16.1.108:50010,DS-736614f7-27de-46b8-987f-d669be6a32a3,DISK]]
+7. BP-292116404-172.16.1.101-1479167821718:blk_1074171731_431661 len=134217728 repl=3 [DatanodeInfoWithStorage[172.16.1.102:50010,DS-1edb1d35-81bf-471b-be04-11d973e2a832,DISK], DatanodeInfoWithStorage[172.16.1.107:50010,DS-a12c4ae3-3f6a-42fc-83ff-7779a9fc0482,DISK], DatanodeInfoWithStorage[172.16.1.108:50010,DS-698dde50-a336-4e00-bc8f-a9e1a5cc76f4,DISK]]
+8. BP-292116404-172.16.1.101-1479167821718:blk_1074171736_431666 len=28488507 repl=3 [DatanodeInfoWithStorage[172.16.1.104:50010,DS-f4667aac-0f2c-463c-9584-d625928b9af5,DISK], DatanodeInfoWithStorage[172.16.1.102:50010,DS-1edb1d35-81bf-471b-be04-11d973e2a832,DISK], DatanodeInfoWithStorage[172.16.1.107:50010,DS-6679d10e-378c-4897-8c0e-250aa1af790a,DISK]]
+
+Status: HEALTHY
+ Total size:	1102230331 B
+ Total dirs:	0
+ Total files:	1
+ Total symlinks:		0
+ Total blocks (validated):	9 (avg. block size 122470036 B)
+ Minimally replicated blocks:	9 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	2
+ Average block replication:	3.0
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+ Number of data-nodes:		5
+ Number of racks:		1
+FSCK ended at Thu Jan 21 05:39:53 EST 2021 in 0 milliseconds
+
+
+The filesystem under path &#39;/public/randomtextwriter/part-m-00000&#39; is HEALTHY
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connecting to namenode via http://172.16.1.101:50070/fsck?ugi=itversity&amp;files=1&amp;blocks=1&amp;locations=1&amp;path=%2Fpublic%2Frandomtextwriter%2Fpart-m-00000
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./02_overview_of_hdfs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Durga Gadiraju<br/>
+        
+            &copy; Copyright ITVersity, Inc.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-80990145-12', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

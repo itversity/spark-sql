@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; Apache Spark using SQL</title>
+    
+  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Apache Spark using SQL</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="spark-sql.html">
+   Apache Spark using SQL
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_getting_started/01_getting_started.html">
+   Getting Started
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Subscribe to our <a href="http://notifyme.itversity.com">Newsletter</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Spark Data Frames to Temp Views.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/itversity/spark-sql"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2FSpark Data Frames to Temp Views.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/Spark Data Frames to Temp Views.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/Spark Data Frames to Temp Views.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="simple nav section-nav flex-column">
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+
+<span class="kn">import</span> <span class="nn">getpass</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span>
+
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span> \
+    <span class="n">builder</span><span class="o">.</span> \
+    <span class="n">config</span><span class="p">(</span><span class="s1">&#39;spark.ui.port&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">enableHiveSupport</span><span class="p">()</span><span class="o">.</span> \
+    <span class="n">config</span><span class="p">(</span><span class="s2">&quot;spark.sql.warehouse.dir&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/user/$</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">/warehouse&quot;</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">appName</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s1"> | Python - Basic Transformations&#39;</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">master</span><span class="p">(</span><span class="s1">&#39;yarn&#39;</span><span class="p">)</span><span class="o">.</span> \
+    <span class="n">getOrCreate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;SELECT current_database()&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+------------------+
+|current_database()|
++------------------+
+|           default|
++------------------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;USE </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">_retail&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DataFrame[]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;show tables&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+----------------+---------+-----------+
+|        database|tableName|isTemporary|
++----------------+---------+-----------+
+|itversity_retail|   orders|      false|
++----------------+---------+-----------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select * from orders&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------+--------------------+-----------------+---------------+
+|order_id|          order_date|order_customer_id|   order_status|
++--------+--------------------+-----------------+---------------+
+|       1|2013-07-25 00:00:...|            11599|         CLOSED|
+|       2|2013-07-25 00:00:...|              256|PENDING_PAYMENT|
+|       3|2013-07-25 00:00:...|            12111|       COMPLETE|
+|       4|2013-07-25 00:00:...|             8827|         CLOSED|
+|       5|2013-07-25 00:00:...|            11318|       COMPLETE|
+|       6|2013-07-25 00:00:...|             7130|       COMPLETE|
+|       7|2013-07-25 00:00:...|             4530|       COMPLETE|
+|       8|2013-07-25 00:00:...|             2911|     PROCESSING|
+|       9|2013-07-25 00:00:...|             5657|PENDING_PAYMENT|
+|      10|2013-07-25 00:00:...|             5648|PENDING_PAYMENT|
+|      11|2013-07-25 00:00:...|              918| PAYMENT_REVIEW|
+|      12|2013-07-25 00:00:...|             1837|         CLOSED|
+|      13|2013-07-25 00:00:...|             9149|PENDING_PAYMENT|
+|      14|2013-07-25 00:00:...|             9842|     PROCESSING|
+|      15|2013-07-25 00:00:...|             2568|       COMPLETE|
+|      16|2013-07-25 00:00:...|             7276|PENDING_PAYMENT|
+|      17|2013-07-25 00:00:...|             2667|       COMPLETE|
+|      18|2013-07-25 00:00:...|             1205|         CLOSED|
+|      19|2013-07-25 00:00:...|             9488|PENDING_PAYMENT|
+|      20|2013-07-25 00:00:...|             9198|     PROCESSING|
++--------+--------------------+-----------------+---------------+
+only showing top 20 rows
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+    <div>
+        <p><b>SparkSession - hive</b></p>
+
+<div>
+    <p><b>SparkContext</b></p>
+
+    <p><a href="http://gw01.itversity.com:38683">Spark UI</a></p>
+
+    <dl>
+      <dt>Version</dt>
+        <dd><code>v2.3.0.2.6.5.0-292</code></dd>
+      <dt>Master</dt>
+        <dd><code>yarn</code></dd>
+      <dt>AppName</dt>
+        <dd><code>itversity | Python - Basic Transformations</code></dd>
+    </dl>
+</div>
+
+    </div>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pyspark.sql.readwriter.DataFrameReader at 0x7f93097b6f28&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+ls -ltr /data/retail_db/orders/part-00000
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-rw-r--r-- 1 root root 2999944 Feb 20  2017 /data/retail_db/orders/part-00000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+tail /data/retail_db/orders/part-00000
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>68874,2014-07-03 00:00:00.0,1601,COMPLETE
+68875,2014-07-04 00:00:00.0,10637,ON_HOLD
+68876,2014-07-06 00:00:00.0,4124,COMPLETE
+68877,2014-07-07 00:00:00.0,9692,ON_HOLD
+68878,2014-07-08 00:00:00.0,6753,COMPLETE
+68879,2014-07-09 00:00:00.0,778,COMPLETE
+68880,2014-07-13 00:00:00.0,1117,COMPLETE
+68881,2014-07-19 00:00:00.0,2518,PENDING_PAYMENT
+68882,2014-07-22 00:00:00.0,10000,ON_HOLD
+68883,2014-07-23 00:00:00.0,5533,COMPLETE
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -tail /public/retail_db/orders/part-00000
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>014-06-12 00:00:00.0,4229,PENDING
+68861,2014-06-13 00:00:00.0,3031,PENDING_PAYMENT
+68862,2014-06-15 00:00:00.0,7326,PROCESSING
+68863,2014-06-16 00:00:00.0,3361,CLOSED
+68864,2014-06-18 00:00:00.0,9634,ON_HOLD
+68865,2014-06-19 00:00:00.0,4567,SUSPECTED_FRAUD
+68866,2014-06-20 00:00:00.0,3890,PENDING_PAYMENT
+68867,2014-06-23 00:00:00.0,869,CANCELED
+68868,2014-06-24 00:00:00.0,10184,PENDING
+68869,2014-06-25 00:00:00.0,7456,PROCESSING
+68870,2014-06-26 00:00:00.0,3343,COMPLETE
+68871,2014-06-28 00:00:00.0,4960,PENDING
+68872,2014-06-29 00:00:00.0,3354,COMPLETE
+68873,2014-06-30 00:00:00.0,4545,PENDING
+68874,2014-07-03 00:00:00.0,1601,COMPLETE
+68875,2014-07-04 00:00:00.0,10637,ON_HOLD
+68876,2014-07-06 00:00:00.0,4124,COMPLETE
+68877,2014-07-07 00:00:00.0,9692,ON_HOLD
+68878,2014-07-08 00:00:00.0,6753,COMPLETE
+68879,2014-07-09 00:00:00.0,778,COMPLETE
+68880,2014-07-13 00:00:00.0,1117,COMPLETE
+68881,2014-07-19 00:00:00.0,2518,PENDING_PAYMENT
+68882,2014-07-22 00:00:00.0,10000,ON_HOLD
+68883,2014-07-23 00:00:00.0,5533,COMPLETE
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>spark.read.csv<span class="o">?</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<pre class="output text_plain literal-block">[0;31mSignature:[0m
+[0mspark[0m[0;34m.[0m[0mread[0m[0;34m.[0m[0mcsv[0m[0;34m([0m[0;34m[0m
+[0;34m[0m    [0mpath[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mschema[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0msep[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mencoding[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mquote[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mescape[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mcomment[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mheader[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0minferSchema[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mignoreLeadingWhiteSpace[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mignoreTrailingWhiteSpace[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mnullValue[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mnanValue[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mpositiveInf[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mnegativeInf[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mdateFormat[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mtimestampFormat[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmaxColumns[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmaxCharsPerColumn[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmaxMalformedLogPerPartition[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmode[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mcolumnNameOfCorruptRecord[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmultiLine[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mcharToEscapeQuoteEscaping[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mDocstring:[0m
+Loads a CSV file and returns the result as a  :class:`DataFrame`.
+
+This function will go through the input once to determine the input schema if
+``inferSchema`` is enabled. To avoid going through the entire data once, disable
+``inferSchema`` option or specify the schema explicitly using ``schema``.
+
+:param path: string, or list of strings, for input path(s),
+             or RDD of Strings storing CSV rows.
+:param schema: an optional :class:`pyspark.sql.types.StructType` for the input schema
+               or a DDL-formatted string (For example ``col0 INT, col1 DOUBLE``).
+:param sep: sets a single character as a separator for each field and value.
+            If None is set, it uses the default value, ``,``.
+:param encoding: decodes the CSV files by the given encoding type. If None is set,
+                 it uses the default value, ``UTF-8``.
+:param quote: sets a single character used for escaping quoted values where the
+              separator can be part of the value. If None is set, it uses the default
+              value, ``&quot;``. If you would like to turn off quotations, you need to set an
+              empty string.
+:param escape: sets a single character used for escaping quotes inside an already
+               quoted value. If None is set, it uses the default value, ``\``.
+:param comment: sets a single character used for skipping lines beginning with this
+                character. By default (None), it is disabled.
+:param header: uses the first line as names of columns. If None is set, it uses the
+               default value, ``false``.
+:param inferSchema: infers the input schema automatically from data. It requires one extra
+               pass over the data. If None is set, it uses the default value, ``false``.
+:param ignoreLeadingWhiteSpace: A flag indicating whether or not leading whitespaces from
+                                values being read should be skipped. If None is set, it
+                                uses the default value, ``false``.
+:param ignoreTrailingWhiteSpace: A flag indicating whether or not trailing whitespaces from
+                                 values being read should be skipped. If None is set, it
+                                 uses the default value, ``false``.
+:param nullValue: sets the string representation of a null value. If None is set, it uses
+                  the default value, empty string. Since 2.0.1, this ``nullValue`` param
+                  applies to all supported types including the string type.
+:param nanValue: sets the string representation of a non-number value. If None is set, it
+                 uses the default value, ``NaN``.
+:param positiveInf: sets the string representation of a positive infinity value. If None
+                    is set, it uses the default value, ``Inf``.
+:param negativeInf: sets the string representation of a negative infinity value. If None
+                    is set, it uses the default value, ``Inf``.
+:param dateFormat: sets the string that indicates a date format. Custom date formats
+                   follow the formats at ``java.text.SimpleDateFormat``. This
+                   applies to date type. If None is set, it uses the
+                   default value, ``yyyy-MM-dd``.
+:param timestampFormat: sets the string that indicates a timestamp format. Custom date
+                        formats follow the formats at ``java.text.SimpleDateFormat``.
+                        This applies to timestamp type. If None is set, it uses the
+                        default value, ``yyyy-MM-dd'T'HH:mm:ss.SSSXXX``.
+:param maxColumns: defines a hard limit of how many columns a record can have. If None is
+                   set, it uses the default value, ``20480``.
+:param maxCharsPerColumn: defines the maximum number of characters allowed for any given
+                          value being read. If None is set, it uses the default value,
+                          ``-1`` meaning unlimited length.
+:param maxMalformedLogPerPartition: this parameter is no longer used since Spark 2.2.0.
+                                    If specified, it is ignored.
+:param mode: allows a mode for dealing with corrupt records during parsing. If None is
+             set, it uses the default value, ``PERMISSIVE``.
+
+        * ``PERMISSIVE`` : when it meets a corrupted record, puts the malformed string                   into a field configured by ``columnNameOfCorruptRecord``, and sets other                   fields to ``null``. To keep corrupt records, an user can set a string type                   field named ``columnNameOfCorruptRecord`` in an user-defined schema. If a                   schema does not have the field, it drops corrupt records during parsing.                   A record with less/more tokens than schema is not a corrupted record to CSV.                   When it meets a record having fewer tokens than the length of the schema,                   sets ``null`` to extra fields. When the record has more tokens than the                   length of the schema, it drops extra tokens.
+        * ``DROPMALFORMED`` : ignores the whole corrupted records.
+        * ``FAILFAST`` : throws an exception when it meets corrupted records.
+
+:param columnNameOfCorruptRecord: allows renaming the new field having malformed string
+                                  created by ``PERMISSIVE`` mode. This overrides
+                                  ``spark.sql.columnNameOfCorruptRecord``. If None is set,
+                                  it uses the value specified in
+                                  ``spark.sql.columnNameOfCorruptRecord``.
+:param multiLine: parse records, which may span multiple lines. If None is
+                  set, it uses the default value, ``false``.
+:param charToEscapeQuoteEscaping: sets a single character used for escaping the escape for
+                                  the quote character. If None is set, the default value is
+                                  escape character when escape and quote characters are
+                                  different, ```` otherwise.
+
+&gt;&gt;&gt; df = spark.read.csv('python/test_support/sql/ages.csv')
+&gt;&gt;&gt; df.dtypes
+[('_c0', 'string'), ('_c1', 'string')]
+&gt;&gt;&gt; rdd = sc.textFile('python/test_support/sql/ages.csv')
+&gt;&gt;&gt; df2 = spark.read.csv(rdd)
+&gt;&gt;&gt; df2.dtypes
+[('_c0', 'string'), ('_c1', 'string')]
+
+.. versionadded:: 2.0
+[0;31mFile:[0m      /usr/hdp/current/spark2-client/python/pyspark/sql/readwriter.py
+[0;31mType:[0m      method
+</pre>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">csv</span><span class="p">(</span>
+    <span class="s1">&#39;/public/retail_db/orders&#39;</span><span class="p">,</span>
+    <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;order_id INT, order_date STRING, order_customer_id INT, order_status STRING&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DataFrame[order_id: int, order_date: string, order_customer_id: int, order_status: string]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------+---------------------+-----------------+---------------+
+|order_id|order_date           |order_customer_id|order_status   |
++--------+---------------------+-----------------+---------------+
+|1       |2013-07-25 00:00:00.0|11599            |CLOSED         |
+|2       |2013-07-25 00:00:00.0|256              |PENDING_PAYMENT|
+|3       |2013-07-25 00:00:00.0|12111            |COMPLETE       |
+|4       |2013-07-25 00:00:00.0|8827             |CLOSED         |
+|5       |2013-07-25 00:00:00.0|11318            |COMPLETE       |
++--------+---------------------+-----------------+---------------+
+only showing top 5 rows
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orders</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s1">&#39;orders_temp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;SHOW tables&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+----------------+-----------+-----------+
+|        database|  tableName|isTemporary|
++----------------+-----------+-----------+
+|itversity_retail|     orders|      false|
+|                |orders_temp|       true|
++----------------+-----------+-----------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;SELECT count(1) FROM orders_temp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------+
+|count(1)|
++--------+
+|   68883|
++--------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    SELECT count(1) FROM orders o JOIN orders_temp ot</span>
+<span class="s1">    ON o.order_id = ot.order_id</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+--------+
+|count(1)|
++--------+
+|   68883|
++--------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">INSERT OVERWRITE TABLE orders_parquet</span>
+<span class="s1">SELECT * FROM orders_temp</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DataFrame[]
+</pre></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "pyspark2"
+        },
+        kernelOptions: {
+            kernelName: "pyspark2",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'pyspark2'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Durga Gadiraju<br/>
+        
+            &copy; Copyright ITVersity, Inc.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-80990145-12', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

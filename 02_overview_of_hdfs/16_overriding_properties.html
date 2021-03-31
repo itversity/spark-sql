@@ -1,0 +1,797 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overriding Properties &#8212; Apache Spark using SQL</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.2d2078699c18a0efb88233928e1cf6ed.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Apache Spark using SQL</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../spark-sql.html">
+   Apache Spark using SQL
+  </a>
+ </li>
+</ul>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../01_getting_started/01_getting_started.html">
+   Getting Started
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Subscribe to our <a href="http://notifyme.itversity.com">Newsletter</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/02_overview_of_hdfs/16_overriding_properties.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/itversity/spark-sql"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F02_overview_of_hdfs/16_overriding_properties.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/02_overview_of_hdfs/16_overriding_properties.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/02_overview_of_hdfs/16_overriding_properties.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="overriding-properties">
+<h1>Overriding Properties<a class="headerlink" href="#overriding-properties" title="Permalink to this headline">¶</a></h1>
+<p>Let us understand how we can override the properties while running <code class="docutils literal notranslate"><span class="pre">hdfs</span> <span class="pre">dfs</span></code> or <code class="docutils literal notranslate"><span class="pre">hadoop</span> <span class="pre">fs</span></code> commands.</p>
+<ul class="simple">
+<li><p>We can change any property which is not defined as final in <strong>core-site.xml</strong> or <strong>hdfs-site.xml</strong>.</p></li>
+<li><p>We can change <code class="docutils literal notranslate"><span class="pre">blocksize</span></code> as well as <code class="docutils literal notranslate"><span class="pre">replication</span></code> while copying the files. We can also change them after copying the files as well.</p></li>
+<li><p>We can either pass individual properties using <code class="docutils literal notranslate"><span class="pre">-D</span></code> or bunch of properties by passing xml similar to <strong>core-site.xml</strong> or <strong>hdfs-site.xml</strong> as part of <code class="docutils literal notranslate"><span class="pre">--conf</span></code>.</p></li>
+<li><p>Let’s copy a file <strong>/data/crime/csv/rows.csv</strong> with default values. The file is splitted into 12 blocks with 2 copies each (as our default blocksize is 128 MB and replication factor is 2).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -ls /user/${USER}/crime
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Found 1 items
+drwxr-xr-x   - itversity students          0 2021-01-28 17:03 /user/itversity/crime/csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -rm -R -skipTrash /user/${USER}/crime
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Deleted /user/itversity/crime
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -mkdir -p /user/${USER}/crime/csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+ls -lhtr /data/crime/csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 1.5G
+-rw-r--r-- 1 root root 1.5G Aug  8  2017 rows.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -put /data/crime/csv/rows.csv /user/${USER}/crime/csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %r /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %o /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>134217728
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %b /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1505540526
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -rm -R -skipTrash /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Deleted /user/itversity/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -Ddfs.blocksize=64M -Ddfs.replication=3 -put /data/crime/csv/rows.csv /user/${USER}/crime/csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %r /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %o /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>67108864
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+hdfs dfs -stat %b /user/${USER}/crime/csv/rows.csv
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1505540526
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+ls -ltr /etc/hadoop/conf/
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 196
+-rw-r--r-- 1 root   root    2250 May 11  2018 yarn-env.cmd
+-rw-r--r-- 1 mapred hadoop  2697 May 11  2018 ssl-server.xml.example
+-rw-r--r-- 1 mapred hadoop  2316 May 11  2018 ssl-client.xml.example
+-rw-r--r-- 1 root   root     758 May 11  2018 mapred-site.xml.template
+-rw-r--r-- 1 root   root    4113 May 11  2018 mapred-queues.xml.template
+-rw-r--r-- 1 root   root     951 May 11  2018 mapred-env.cmd
+-rw-r--r-- 1 root   root    5511 May 11  2018 kms-site.xml
+-rw-r--r-- 1 root   root    1631 May 11  2018 kms-log4j.properties
+-rw-r--r-- 1 root   root    1527 May 11  2018 kms-env.sh
+-rw-r--r-- 1 root   root    3518 May 11  2018 kms-acls.xml
+-rw-r--r-- 1 root   root    2490 May 11  2018 hadoop-metrics.properties
+-rw-r--r-- 1 root   root    3979 May 11  2018 hadoop-env.cmd
+-rw-r--r-- 1 hdfs   hadoop  1335 May 11  2018 configuration.xsl
+-rw-r--r-- 1 hdfs   hadoop  1308 Mar  3  2020 hadoop-policy.xml
+-rw-r--r-- 1 hdfs   hadoop   884 Mar  3  2020 ssl-client.xml
+drwxr-xr-x 2 root   hadoop  4096 Mar  3  2020 secure
+-rw-r--r-- 1 hdfs   hadoop  1000 Mar  3  2020 ssl-server.xml
+-rw-r--r-- 1 hdfs   hadoop  6531 Mar  3  2020 hdfs-site.xml
+-rw-r--r-- 1 hdfs   root      96 Mar  3  2020 slaves
+-rw-r--r-- 1 mapred hadoop  6984 Mar  3  2020 mapred-site.xml
+-rw-r--r-- 1 hdfs   hadoop  2135 Mar  3  2020 capacity-scheduler.xml
+-rwxr-xr-x 1 yarn   hadoop  5359 Mar  3  2020 yarn-env.sh
+-rw-r--r-- 1 root   hadoop  1019 Mar  3  2020 container-executor.cfg
+-rwxr-xr-x 1 hdfs   root     818 Mar  3  2020 mapred-env.sh
+-rw-r--r-- 1 hdfs   root     945 Mar  3  2020 taskcontroller.cfg
+-rw-r--r-- 1 hdfs   root    1020 Mar  3  2020 commons-logging.properties
+-rw-r--r-- 1 hdfs   root    1602 Mar  3  2020 health_check
+-rw-r--r-- 1 hdfs   hadoop  2263 Mar  3  2020 hadoop-metrics2.properties
+-rwxr-xr-x 1 root   root    4221 Mar  3  2020 task-log4j.properties
+-rw-r--r-- 1 hdfs   hadoop   319 Mar  3  2020 topology_mappings.data
+-rwxr-xr-x 1 root   root    2358 Mar  3  2020 topology_script.py
+-rw-r--r-- 1 hdfs   hadoop 10495 May  6  2020 log4j.properties
+-rw-r--r-- 1 yarn   hadoop 18438 Dec 14 02:11 yarn-site.xml
+-rw-r--r-- 1 hdfs   hadoop  5705 Dec 14 02:40 hadoop-env.sh
+-rw-r--r-- 1 hdfs   hadoop  4990 Jan  8 11:20 core-site.xml
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">sh</span>
+
+cat /etc/hadoop/conf/hdfs-site.xml
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  &lt;configuration&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.block.access.token.enable&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.blockreport.initialDelay&lt;/name&gt;
+      &lt;value&gt;120&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.blocksize&lt;/name&gt;
+      &lt;value&gt;134217728&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.client.read.shortcircuit&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.client.read.shortcircuit.streams.cache.size&lt;/name&gt;
+      &lt;value&gt;4096&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.client.retry.policy.enabled&lt;/name&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.cluster.administrators&lt;/name&gt;
+      &lt;value&gt; hdfs&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.content-summary.limit&lt;/name&gt;
+      &lt;value&gt;5000&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:50010&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.balance.bandwidthPerSec&lt;/name&gt;
+      &lt;value&gt;6250000&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+      &lt;value&gt;/hdp01/hadoop/hdfs/data,/hdp02/hadoop/hdfs/data&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.data.dir.perm&lt;/name&gt;
+      &lt;value&gt;750&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.du.reserved&lt;/name&gt;
+      &lt;value&gt;2563350016&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.failed.volumes.tolerated&lt;/name&gt;
+      &lt;value&gt;0&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.http.address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:50075&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.https.address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:50475&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.ipc.address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:8010&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.datanode.max.transfer.threads&lt;/name&gt;
+      &lt;value&gt;4096&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.domain.socket.path&lt;/name&gt;
+      &lt;value&gt;/var/lib/hadoop-hdfs/dn_socket&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.encrypt.data.transfer.cipher.suites&lt;/name&gt;
+      &lt;value&gt;AES/CTR/NoPadding&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.heartbeat.interval&lt;/name&gt;
+      &lt;value&gt;3&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.hosts.exclude&lt;/name&gt;
+      &lt;value&gt;/etc/hadoop/conf/dfs.exclude&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.http.policy&lt;/name&gt;
+      &lt;value&gt;HTTP_ONLY&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.https.port&lt;/name&gt;
+      &lt;value&gt;50470&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.journalnode.edits.dir&lt;/name&gt;
+      &lt;value&gt;/hadoop/hdfs/journalnode&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.journalnode.http-address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:8480&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.journalnode.https-address&lt;/name&gt;
+      &lt;value&gt;0.0.0.0:8481&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.accesstime.precision&lt;/name&gt;
+      &lt;value&gt;3600000&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.audit.log.async&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.avoid.read.stale.datanode&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.avoid.write.stale.datanode&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.checkpoint.dir&lt;/name&gt;
+      &lt;value&gt;/var/hadoop/hdfs/namesecondary&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.checkpoint.edits.dir&lt;/name&gt;
+      &lt;value&gt;${dfs.namenode.checkpoint.dir}&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.checkpoint.period&lt;/name&gt;
+      &lt;value&gt;21600&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.checkpoint.txns&lt;/name&gt;
+      &lt;value&gt;1000000&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.fslock.fair&lt;/name&gt;
+      &lt;value&gt;false&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.handler.count&lt;/name&gt;
+      &lt;value&gt;200&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.http-address&lt;/name&gt;
+      &lt;value&gt;172.16.1.101:50070&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.https-address&lt;/name&gt;
+      &lt;value&gt;nn01.itversity.com:50470&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+      &lt;value&gt;/hdp01/hadoop/hdfs/namenode,/hdp02/hadoop/hdfs/namenode&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.name.dir.restore&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.rpc-address&lt;/name&gt;
+      &lt;value&gt;nn01.itversity.com:8020&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.safemode.threshold-pct&lt;/name&gt;
+      &lt;value&gt;1&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;
+      &lt;value&gt;nn02.itversity.com:50090&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.stale.datanode.interval&lt;/name&gt;
+      &lt;value&gt;30000&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.startup.delay.block.deletion.sec&lt;/name&gt;
+      &lt;value&gt;3600&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.namenode.write.stale.datanode.ratio&lt;/name&gt;
+      &lt;value&gt;1.0f&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.permissions.enabled&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.permissions.superusergroup&lt;/name&gt;
+      &lt;value&gt;hdfs&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.replication&lt;/name&gt;
+      &lt;value&gt;2&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.replication.max&lt;/name&gt;
+      &lt;value&gt;50&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.support.append&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;dfs.webhdfs.enabled&lt;/name&gt;
+      &lt;value&gt;true&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;fs.permissions.umask-mode&lt;/name&gt;
+      &lt;value&gt;022&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;nfs.exports.allowed.hosts&lt;/name&gt;
+      &lt;value&gt;* rw&lt;/value&gt;
+    &lt;/property&gt;
+    
+    &lt;property&gt;
+      &lt;name&gt;nfs.file.dump.dir&lt;/name&gt;
+      &lt;value&gt;/tmp/.hdfs-nfs&lt;/value&gt;
+    &lt;/property&gt;
+    
+  &lt;/configuration&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./02_overview_of_hdfs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Durga Gadiraju<br/>
+        
+            &copy; Copyright ITVersity, Inc.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-80990145-12', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
