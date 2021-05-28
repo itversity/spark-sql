@@ -14,8 +14,9 @@
   - file: 01_getting_started/10_role_of_spark_or_hive_metastore
   - file: 01_getting_started/11_exercise_getting_started
 
-- file: 02_overview_of_hdfs/02_using_hdfs_cli
+- file: 02_overview_of_hdfs/01_Overview of HDFS
   sections:
+  - file: 02_overview_of_hdfs/01_Overview of HDFS
   - file: 02_overview_of_hdfs/02_using_hdfs_cli
   - file: 02_overview_of_hdfs/03_getting_help_or_usage
   - file: 02_overview_of_hdfs/04_listing_hdfs_files
@@ -31,6 +32,7 @@
   - file: 02_overview_of_hdfs/14_using_hdfs_stat_command
   - file: 02_overview_of_hdfs/15_hdfs_file_permissions
   - file: 02_overview_of_hdfs/16_overriding_properties
+  - file: 02_overview_of_hdfs/understanding_linux_file_system_240
 
 - file: 03_basic_transformations/01_basic_transformations
   sections:
