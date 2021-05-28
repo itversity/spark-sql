@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Loading into Partitions &#8212; Apache Spark using SQL</title>
+    <title>Overview of HDFS &#8212; Apache Spark using SQL</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -55,8 +55,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Inserting Data into Partitions" href="09_inserting_data_into_partitions.html" />
-    <link rel="prev" title="Adding Partitions to Tables" href="07_adding_partitions_to_tables.html" />
+    <link rel="next" title="Using HDFS CLI" href="02_using_hdfs_cli.html" />
+    <link rel="prev" title="Exercise - Getting Started with Spark SQL" href="../01_getting_started/11_exercise_getting_started.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -100,10 +100,92 @@
    Getting Started
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../02_overview_of_hdfs/01_Overview%20of%20HDFS.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Overview of HDFS
   </a>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="02_using_hdfs_cli.html">
+     Using HDFS CLI
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="03_getting_help_or_usage.html">
+     Getting help or usage
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="04_listing_hdfs_files.html">
+     Listing HDFS Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="05_managing_hdfs_directories.html">
+     Managing HDFS Directories
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="06_copying_files_from_local_to_hdfs.html">
+     Copying files from local to HDFS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="07_copying_files_from_hdfs_to_local.html">
+     Copying files from HDFS to Local
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="08_copying_files_from_hdfs_to_hdfs.html">
+     Copying files from HDFS to HDFS
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="09_previewing_data_in_hdfs_files.html">
+     Previewing data in HDFS Files
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="10_getting_file_metadata.html">
+     Getting File Metadata
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="11_hdfs_blocksize.html">
+     HDFS Blocksize
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="12_hdfs_replication_factor.html">
+     HDFS Replication Factor
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="13_getting_hdfs_storage_usage.html">
+     Getting HDFS Storage Usage
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="14_using_hdfs_stat_command.html">
+     Using HDFS Stat Commands
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="15_hdfs_file_permissions.html">
+     HDFS File Permissions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="16_overriding_properties.html">
+     Overriding Properties
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="understanding_linux_file_system_240.html">
+     Understanding Linux File System
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../03_basic_transformations/01_basic_transformations.html">
@@ -115,62 +197,10 @@
    Basic DDL and DML
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="01_dml_and_partitioning.html">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../05_dml_and_partitioning/01_dml_and_partitioning.html">
    DML and Partitioning
   </a>
-  <ul class="current">
-   <li class="toctree-l2">
-    <a class="reference internal" href="02_introduction_to_partitioning.html">
-     Introduction to Partitioning
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="03_creating_tables_using_parquet.html">
-     Creating Tables using Parquet
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="04_load_vs_insert.html">
-     LOAD vs. INSERT
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="05_inserting_data_using_stage_table.html">
-     Inserting Data using Stage Table
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="06_creating_partitioned_tables.html">
-     Creating Partitioned Tables
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="07_adding_partitions_to_tables.html">
-     Adding Partitions to Tables
-    </a>
-   </li>
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Loading into Partitions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="09_inserting_data_into_partitions.html">
-     Inserting Data into Partitions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="10_using_dynamic_partition_mode.html">
-     Using Dynamic Partition Mode
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="11_exercises_partitioned_tables.html">
-     Exercise - Partitioned Tables
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../06_predefined_functions/01_predefined_functions.html">
@@ -224,7 +254,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/05_dml_and_partitioning/08_loading_data_into_partitions.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/02_overview_of_hdfs/01_Overview of HDFS.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -244,10 +274,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F05_dml_and_partitioning/08_loading_data_into_partitions.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/itversity/spark-sql/issues/new?title=Issue%20on%20page%20%2F02_overview_of_hdfs/01_Overview of HDFS.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/05_dml_and_partitioning/08_loading_data_into_partitions.ipynb"><button
+        <a class="edit-button" href="https://github.com/itversity/spark-sql/edit/master/02_overview_of_hdfs/01_Overview of HDFS.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -267,7 +297,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/05_dml_and_partitioning/08_loading_data_into_partitions.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/itversity/spark-sql/master?urlpath=tree/02_overview_of_hdfs/01_Overview of HDFS.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -291,159 +321,26 @@
         
               <div>
                 
-  <div class="section" id="loading-into-partitions">
-<h1>Loading into Partitions<a class="headerlink" href="#loading-into-partitions" title="Permalink to this headline">¶</a></h1>
-<p>Let us understand how to use load command to load data into partitioned tables.</p>
-<p>Let us start spark context for this Notebook so that we can execute the code provided. You can sign up for our <a class="reference external" href="https://labs.itversity.com/plans">10 node state of the art cluster/labs</a> to learn Spark SQL using our unique integrated LMS.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>val username = System.getProperty(&quot;user.name&quot;)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
-
-val username = System.getProperty(&quot;user.name&quot;)
-val spark = SparkSession.
-    builder.
-    config(&quot;spark.ui.port&quot;, &quot;0&quot;).
-    config(&quot;spark.sql.warehouse.dir&quot;, s&quot;/user/${username}/warehouse&quot;).
-    enableHiveSupport.
-    appName(s&quot;${username} | Spark SQL - Managing Tables - DML and Partitioning&quot;).
-    master(&quot;yarn&quot;).
-    getOrCreate
-</pre></div>
-</div>
-</div>
-</div>
-<p>If you are going to use CLIs, you can use Spark SQL using one of the 3 approaches.</p>
-<p><strong>Using Spark SQL</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-sql \
-    --master yarn \
-    --conf spark.ui.port=0 \
-    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
-</pre></div>
-</div>
-<p><strong>Using Scala</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>spark2-shell \
-    --master yarn \
-    --conf spark.ui.port=0 \
-    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
-</pre></div>
-</div>
-<p><strong>Using Pyspark</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pyspark2 \
-    --master yarn \
-    --conf spark.ui.port=0 \
-    --conf spark.sql.warehouse.dir=/user/${USER}/warehouse
-</pre></div>
-</div>
+  <div class="section" id="overview-of-hdfs">
+<h1>Overview of HDFS<a class="headerlink" href="#overview-of-hdfs" title="Permalink to this headline">¶</a></h1>
+<p>As part of this module we will be covering all important aspects of HDFS that are required for development. We have covered all the essentials for the development.</p>
 <ul class="simple">
-<li><p>We need to make sure that file format of the file which is being loaded into table is same as the file format used while creating the table.</p></li>
-<li><p>We also need to make sure that delimiters are consistent between files and table for text file format.</p></li>
-<li><p>Also data should match the criteria for the partition into which data is loaded.</p></li>
-<li><p>Our <code class="docutils literal notranslate"><span class="pre">/data/retail_db/orders</span></code> have data for the whole year and hence we should not load the data directly into partition.</p></li>
-<li><p>We need to split into files matching partition criteria and then load into the table.</p></li>
+<li><p>Using HDFS CLI</p></li>
+<li><p>Getting Help or Usage</p></li>
+<li><p>Listing HDFS Files</p></li>
+<li><p>Managing HDFS Directories</p></li>
+<li><p>Copying files from HDFS to Local</p></li>
+<li><p>Copying files from HDFS to HDFS</p></li>
+<li><p>Previewing data in HDFS Files</p></li>
+<li><p>Getting File Metadata</p></li>
+<li><p>HDFS Block Size</p></li>
+<li><p>HDFS Replication Factor</p></li>
+<li><p>Getting HDFS Storage Usage</p></li>
+<li><p>Using HDFS Stat Commands</p></li>
+<li><p>HDFS File Permissions</p></li>
+<li><p>Overriding Properties</p></li>
 </ul>
-<p>To use load command to load the files into partitions we need to pre-partition the data based on partition logic.</p>
-<p>Here is the example of using simple shell commands to partition the data. Use command prompt to run these commands</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>rm -rf ~/orders
-mkdir -p ~/orders
-
-grep <span class="m">2013</span>-07 /data/retail_db/orders/part-00000 &gt; ~/orders/orders_201307
-grep <span class="m">2013</span>-08 /data/retail_db/orders/part-00000 &gt; ~/orders/orders_201308
-grep <span class="m">2013</span>-09 /data/retail_db/orders/part-00000 &gt; ~/orders/orders_201309
-grep <span class="m">2013</span>-10 /data/retail_db/orders/part-00000 &gt; ~/orders/orders_201310
-</pre></div>
-</div>
-<p>Let us see how we can load data into corresponding partitions. Data has to be pre-partitioned based on the partitioned column.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-USE itversity_retail
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-LOAD DATA LOCAL INPATH &#39;/home/itversity/orders/orders_201307&#39;
-  INTO TABLE orders_part PARTITION (order_month=201307)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import sys.process._
-
-s&quot;hdfs dfs -ls -R /user/${username}/warehouse/${username}_retail.db/orders_part&quot; !
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-LOAD DATA LOCAL INPATH &#39;/home/itversity/orders/orders_201308&#39;
-  INTO TABLE orders_part PARTITION (order_month=201308)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-LOAD DATA LOCAL INPATH &#39;/home/itversity/orders/orders_201309&#39;
-  INTO TABLE orders_part PARTITION (order_month=201309)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-LOAD DATA LOCAL INPATH &#39;/home/itversity/orders/orders_201310&#39;
-  INTO TABLE orders_part PARTITION (order_month=201310)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import sys.process._
-
-s&quot;hdfs dfs -ls -R /user/${username}/warehouse/${username}_retail.db/orders_part&quot; !
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>import sys.process._
-
-s&quot;hdfs dfs -tail /user/${username}/warehouse/${username}_retail.db/orders_part/order_month=201310/orders_201310&quot;!
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight- notranslate"><div class="highlight"><pre><span></span>%%sql
-
-SELECT * FROM orders_part LIMIT 10
-</pre></div>
-</div>
-</div>
+<div class="toctree-wrapper compound">
 </div>
 </div>
 
@@ -456,16 +353,16 @@ SELECT * FROM orders_part LIMIT 10
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "apache_toree_scala"
+            mode: "python"
         },
         kernelOptions: {
-            kernelName: "apache_toree_scala",
-            path: "./05_dml_and_partitioning"
+            kernelName: "python3",
+            path: "./02_overview_of_hdfs"
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'apache_toree_scala'</script>
+    <script>kernelName = 'python3'</script>
 
               </div>
               
@@ -475,8 +372,8 @@ SELECT * FROM orders_part LIMIT 10
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="07_adding_partitions_to_tables.html" title="previous page">Adding Partitions to Tables</a>
-    <a class='right-next' id="next-link" href="09_inserting_data_into_partitions.html" title="next page">Inserting Data into Partitions</a>
+    <a class='left-prev' id="prev-link" href="../01_getting_started/11_exercise_getting_started.html" title="previous page">Exercise - Getting Started with Spark SQL</a>
+    <a class='right-next' id="next-link" href="02_using_hdfs_cli.html" title="next page">Using HDFS CLI</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
